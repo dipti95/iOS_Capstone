@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct DetailProductView: View {
+  @EnvironmentObject var cart: CartViewModel
+  @EnvironmentObject var wishlist: WishlistViewModel
   var product: Product
   @State private var currentImageIndex = 0
+  @State var showItemAdded = false
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       Text("Title: \(product.title)")
         .font(.title2)
         .bold()
-
       imageSection
-
       Text("Description:")
         .font(.headline)
       Text(product.description)
@@ -31,12 +32,15 @@ struct DetailProductView: View {
   }
 
   private var imageSection: some View {
-    VStack() {
+    VStack {
       if let imageUrl = product.images.indices.contains(currentImageIndex) ? product.images[currentImageIndex] : nil {
         AsyncImage(url: imageUrl) { image in
           image
             .resizable()
             .scaledToFit()
+          Button(action: addToWishlist) {
+            Text("Wishlist")
+          }
         } placeholder: {
           ProgressView()
         }
@@ -75,14 +79,14 @@ struct DetailProductView: View {
 
   private var actionButtons: some View {
     HStack {
-      Button(action: addToWishlist) {
-        Text("Add to Wishlist")
-      }
-
-      Spacer()
-
       Button(action: addToCart) {
         Text("Add to Cart")
+      }
+      .alert("Added to Cart", isPresented: $showItemAdded) {
+        // could add more button functionality here
+        // or this could become a custom alert view like in Week 1 Bullseye Assignment
+      } message: {
+        Text("\(product.title)")
       }
     }
   }
@@ -104,9 +108,13 @@ struct DetailProductView: View {
   }
 
   private func addToWishlist() {
+    wishlist.productsInWishlist.append(product)
+    showItemAdded.toggle()
   }
 
   private func addToCart() {
+    cart.productsInCart.append(product)
+    showItemAdded.toggle()
   }
 }
 
@@ -128,6 +136,8 @@ struct DetailProductView: View {
       URL(string: "https://i.dummyjson.com/data/products/1/3.jpg")!,
       URL(string: "https://i.dummyjson.com/data/products/1/4.jpg")!,
       URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!
-  ]
-  ))
+  ])
+  )
+  .environmentObject(CartViewModel())
+  .environmentObject(WishlistViewModel())
 }

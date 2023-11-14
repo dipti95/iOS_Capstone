@@ -10,11 +10,26 @@ import SwiftUI
 struct ContentView: View {
   var body: some View {
     VStack {
-      AllProductView(viewModel: ProductsViewModel())
+      TabView {
+        AllProductView(viewModel: ProductsViewModel())
+          .tabItem {
+            Label("Products", systemImage: "list.dash")
+          }
+        CartView()
+          .tabItem {
+            Label("Cart", systemImage: "list.dash")
+          }
+        WishlistView()
+          .tabItem {
+            Label("Wishlist", systemImage: "list.dash")
+          }
+      }
     }
   }
 }
 
 #Preview {
   ContentView()
+    .environmentObject(CartViewModel())
+    .environmentObject(WishlistViewModel())
 }
