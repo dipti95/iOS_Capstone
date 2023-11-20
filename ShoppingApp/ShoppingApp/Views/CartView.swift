@@ -20,7 +20,7 @@ struct CartView: View {
               .resizable()
               .scaledToFit()
 
-            Text("Your Shopping Cart is empty")
+            Text("Cart is empty")
               .font(.system(size: 36, weight: .light, design: .rounded))
               .multilineTextAlignment(.center)
               .padding()
@@ -57,8 +57,6 @@ struct CartView: View {
                 Text("Checkout")
               }
               .alert("Added to Cart", isPresented: $showItemAdded) {
-                // could add more button functionality here
-                // or this could become a custom alert view like in Week 1 Bullseye Assignment
               } message: {
                 Text("orderPlaced")
               }
@@ -72,7 +70,7 @@ struct CartView: View {
 
   private func checkout() {
     let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
-    order.order.append(Order(orderItems: cart.productsInCart ,totalPrice: totalPrice))
+    order.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
     showItemAdded.toggle()
   }
 }

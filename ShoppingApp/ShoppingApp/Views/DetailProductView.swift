@@ -83,8 +83,6 @@ struct DetailProductView: View {
         Text("Add to Cart")
       }
       .alert("Added to Cart", isPresented: $showItemAdded) {
-        // could add more button functionality here
-        // or this could become a custom alert view like in Week 1 Bullseye Assignment
       } message: {
         Text("\(product.title)")
       }
@@ -135,8 +133,8 @@ struct DetailProductView: View {
       URL(string: "https://i.dummyjson.com/data/products/1/2.jpg")!,
       URL(string: "https://i.dummyjson.com/data/products/1/3.jpg")!,
       URL(string: "https://i.dummyjson.com/data/products/1/4.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!
-  ])
+      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!]
+  )
   )
   .environmentObject(CartViewModel())
   .environmentObject(WishlistViewModel())

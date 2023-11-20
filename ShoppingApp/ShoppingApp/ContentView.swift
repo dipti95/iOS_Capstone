@@ -13,15 +13,15 @@ struct ContentView: View {
       TabView {
         AllProductView(viewModel: ProductsViewModel())
           .tabItem {
-            Label("Products", systemImage: "list.dash")
+            Label("Products", systemImage: "list.bullet.circle")
           }
         CartView()
           .tabItem {
-            Label("Cart", systemImage: "list.dash")
+            Label("Cart", systemImage: "cart.fill")
           }
         WishlistView()
           .tabItem {
-            Label("Wishlist", systemImage: "list.dash")
+            Label("Wishlist", systemImage: "heart.circle")
           }
       }
     }

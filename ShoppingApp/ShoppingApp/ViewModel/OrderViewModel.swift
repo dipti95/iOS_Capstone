@@ -52,5 +52,4 @@ class OrderViewModel: ObservableObject {
       print("Initial run of app or failure loading JSON file from Documents Directory")
     }
   }
-
 }
