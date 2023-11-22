@@ -127,13 +127,13 @@ struct DetailProductView: View {
     stock: 94,
     brand: "Apple",
     category: "smartphones",
-    thumbnail: URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!,
+    thumbnail: URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg"),
     images: [
-      URL(string: "https://i.dummyjson.com/data/products/1/1.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/2.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/3.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/4.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!]
+      URL(string: "https://i.dummyjson.com/data/products/1/1.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/2.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/3.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/4.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")]
   )
   )
   .environmentObject(CartViewModel())

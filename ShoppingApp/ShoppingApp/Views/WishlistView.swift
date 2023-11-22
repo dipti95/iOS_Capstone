@@ -18,7 +18,7 @@ struct WishlistView: View {
             .resizable()
             .scaledToFit()
 
-          Text("Your Shopping Cart is empty")
+          Text("No WishList Selected")
             .font(.system(size: 36, weight: .light, design: .rounded))
             .multilineTextAlignment(.center)
             .padding()

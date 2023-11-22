@@ -8,21 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+  @State private var isActive = true
   var body: some View {
-    VStack {
-      TabView {
-        AllProductView(viewModel: ProductsViewModel())
-          .tabItem {
-            Label("Products", systemImage: "list.bullet.circle")
+    Group {
+      if isActive {
+        LaunchView()
+      } else {
+        VStack {
+          TabView {
+            AllProductView(viewModel: ProductsViewModel())
+              .tabItem {
+                Label("Products", systemImage: "list.bullet.circle")
+              }
+            CartView()
+              .tabItem {
+                Label("Cart", systemImage: "cart.fill")
+              }
+            WishlistView()
+              .tabItem {
+                Label("Wishlist", systemImage: "heart.circle")
+              }
           }
-        CartView()
-          .tabItem {
-            Label("Cart", systemImage: "cart.fill")
-          }
-        WishlistView()
-          .tabItem {
-            Label("Wishlist", systemImage: "heart.circle")
-          }
+        }
+      }
+    }
+    .onAppear {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        withAnimation {
+          self.isActive = false
+        }
       }
     }
   }
