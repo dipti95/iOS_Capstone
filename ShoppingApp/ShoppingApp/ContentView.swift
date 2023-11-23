@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+
+
   @State private var isActive = true
   var body: some View {
     Group {
@@ -16,6 +18,10 @@ struct ContentView: View {
       } else {
         VStack {
           TabView {
+            CategoryView(viewModel: ProductsViewModel())
+              .tabItem {
+                Label("Products", systemImage: "list.bullet.circle")
+              }
             AllProductView(viewModel: ProductsViewModel())
               .tabItem {
                 Label("Products", systemImage: "list.bullet.circle")
@@ -29,6 +35,7 @@ struct ContentView: View {
                 Label("Wishlist", systemImage: "heart.circle")
               }
           }
+
         }
       }
     }

@@ -21,30 +21,38 @@ struct AllProductView: View {
       ZStack {
         switch viewModel.state {
         case .success(let data):
-          ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
-              ForEach(data, id: \.id) { product in
-                NavigationLink(destination: DetailProductView(product: product)) {
-                  VStack {
-                    AsyncImage(url: product.thumbnail) { image in
-                      image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    } placeholder: {
-                      ProgressView()
-                    }
-                    .frame(width: 150, height: 150) // Adjust the frame width and height as needed
-                    .cornerRadius(10)
-                    Text("Price: \(product.price)") // Formatted price
-                    Text("Brand: \(product.brand)")
-                  }
 
-                }
+
+          List(data, id: \.id) { product in
+            NavigationLink(destination: DetailProductView(product: product)) {
+              VStack(alignment: .leading, spacing: 10) {
+                  AsyncImage(url: product.thumbnail) { image in
+                      image
+                          .resizable()
+                          .scaledToFit()
+                  } placeholder: {
+                    ProgressView()
+                  }
+                  .frame(width: 300, height: 200)
+                  .cornerRadius(10)
+                  .shadow(radius: 5)
+                  Text("Price: \(product.price)")
+                      .font(.headline)
+                      .foregroundColor(.primary)
+
+                  Text("Brand: \(product.brand)")
+                      .font(.subheadline)
+                      .foregroundColor(.secondary)
               }
-              .border(Color.gray)
-            }
-            .padding()
+              .padding(.vertical)
+              .background(Color(.systemBackground))
+              .cornerRadius(12)
+              .shadow(radius: 3)
+              }
           }
+          .listStyle(PlainListStyle())
+          .padding()
+
           .navigationTitle("Products")
 
         case .failed(let error):

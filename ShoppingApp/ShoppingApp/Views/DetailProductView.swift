@@ -8,112 +8,139 @@
 import SwiftUI
 
 struct DetailProductView: View {
-  @EnvironmentObject var cart: CartViewModel
-  @EnvironmentObject var wishlist: WishlistViewModel
-  var product: Product
-  @State private var currentImageIndex = 0
-  @State var showItemAdded = false
+    @EnvironmentObject var cart: CartViewModel
+    @EnvironmentObject var wishlist: WishlistViewModel
+    var product: Product
+    @State private var currentImageIndex = 0
+    @State var showItemAdded = false
 
-  var body: some View {
-    VStack(alignment: .leading, spacing: 0) {
-      Text("Title: \(product.title)")
-        .font(.title2)
-        .bold()
-      imageSection
-      Text("Description:")
-        .font(.headline)
-      Text(product.description)
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Title: \(product.title)")
+                    .font(.title2)
+                    .bold()
+                    .padding(.horizontal)
 
-      Text("Rating: \(product.rating)")
+                imageSection
 
-      actionButtons
-    }
-    .padding(0)
-  }
+                Text("Description:")
+                    .font(.headline)
+                    .padding(.horizontal)
 
-  private var imageSection: some View {
-    VStack {
-      if let imageUrl = product.images.indices.contains(currentImageIndex) ? product.images[currentImageIndex] : nil {
-        AsyncImage(url: imageUrl) { image in
-          image
-            .resizable()
-            .scaledToFit()
-          Button(action: addToWishlist) {
-            Text("Wishlist")
-          }
-        } placeholder: {
-          ProgressView()
+                Text(product.description)
+                    .padding(.horizontal)
+
+                Text("Rating: \(product.rating)")
+                    .padding(.horizontal)
+
+                actionButtons
+            }
+            .padding(.bottom)
         }
-        .frame(width: 300)
-        .cornerRadius(10)
-      } else {
-        Text("No Image Available")
-          .frame(width: 300)
-          .background(Color.gray.opacity(0.2))
-          .cornerRadius(10)
-      }
-
-      imageNavigationButtons
     }
-  }
 
-  private var imageNavigationButtons: some View {
-    HStack {
-      Button(action: previousImage) {
-        Image(systemName: "arrow.backward.circle.fill")
-          .font(.largeTitle)
-          .foregroundColor(currentImageIndex == 0 ? .gray : .blue)
-      }
-      .disabled(currentImageIndex == 0)
+    private var imageSection: some View {
+        VStack {
+            if let imageUrl = product.images.indices.contains(currentImageIndex) ? product.images[currentImageIndex] : nil {
+                AsyncImage(url: imageUrl) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(height: 300)
+                .padding(.horizontal)
 
-      Spacer()
-
-      Button(action: nextImage) {
-        Image(systemName: "arrow.forward.circle.fill")
-          .font(.largeTitle)
-          .foregroundColor(currentImageIndex == product.images.count - 1 ? .gray : .blue)
-      }
-      .disabled(currentImageIndex == product.images.count - 1)
+                imageNavigationButtons
+            } else {
+                Text("No Image Available")
+                    .frame(height: 300)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+            }
+        }
     }
-  }
 
-  private var actionButtons: some View {
-    HStack {
-      Button(action: addToCart) {
-        Text("Add to Cart")
-      }
-      .alert("Added to Cart", isPresented: $showItemAdded) {
-      } message: {
-        Text("\(product.title)")
-      }
+    private var imageNavigationButtons: some View {
+        HStack {
+            Button(action: previousImage) {
+                Image(systemName: "arrow.backward.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(currentImageIndex == 0 ? .gray : .blue)
+            }
+            .disabled(currentImageIndex == 0)
+
+            Spacer()
+
+            Button(action: nextImage) {
+                Image(systemName: "arrow.forward.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(currentImageIndex == product.images.count - 1 ? .gray : .blue)
+            }
+            .disabled(currentImageIndex == product.images.count - 1)
+        }
+        .padding()
     }
-  }
 
-  private func nextImage() {
-    if currentImageIndex < product.images.count - 1 {
-      withAnimation {
-        currentImageIndex += 1
-      }
+    private var actionButtons: some View {
+        HStack {
+            Button(action: addToCart) {
+                Text("Add to Cart")
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                    .cornerRadius(20)
+                    .shadow(radius: 3)
+            }
+            .alert("Added to Cart", isPresented: $showItemAdded) {
+            } message: {
+                Text("\(product.title)")
+            }
+
+            Button(action: addToWishlist) {
+                Text("Wishlist")
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.red]), startPoint: .leading, endPoint: .trailing))
+                    .cornerRadius(20)
+                    .shadow(radius: 3)
+            }
+        }
+        .padding(.horizontal)
     }
-  }
 
-  private func previousImage() {
-    if currentImageIndex > 0 {
-      withAnimation {
-        currentImageIndex -= 1
-      }
+    private func nextImage() {
+        if currentImageIndex < product.images.count - 1 {
+            withAnimation {
+                currentImageIndex += 1
+            }
+        }
     }
-  }
 
-  private func addToWishlist() {
-    wishlist.productsInWishlist.append(product)
-    showItemAdded.toggle()
-  }
+    private func previousImage() {
+        if currentImageIndex > 0 {
+            withAnimation {
+                currentImageIndex -= 1
+            }
+        }
+    }
 
-  private func addToCart() {
-    cart.productsInCart.append(product)
-    showItemAdded.toggle()
-  }
+    private func addToWishlist() {
+        wishlist.productsInWishlist.append(product)
+        showItemAdded.toggle()
+    }
+
+    private func addToCart() {
+        cart.productsInCart.append(product)
+        showItemAdded.toggle()
+    }
 }
 
 #Preview {
@@ -133,7 +160,8 @@ struct DetailProductView: View {
       URL(string: "https://i.dummyjson.com/data/products/1/2.jpg"),
       URL(string: "https://i.dummyjson.com/data/products/1/3.jpg"),
       URL(string: "https://i.dummyjson.com/data/products/1/4.jpg"),
-      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")]
+      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")
+    ]
   )
   )
   .environmentObject(CartViewModel())

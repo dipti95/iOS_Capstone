@@ -23,7 +23,7 @@ struct LaunchView: View {
   @State private var animate = false
   var body: some View {
     ZStack {
-      Image("shoppingBags")
+      Image("blackbagBackground")
         .resizable()
         .aspectRatio(contentMode: .fill)
         .edgesIgnoringSafeArea(.all)
@@ -66,14 +66,10 @@ struct LaunchView: View {
       .onAppear {
           self.animate = true
       }
-
-
-
-
-
     }
   }
 }
+
 
 #Preview {
   LaunchView()
