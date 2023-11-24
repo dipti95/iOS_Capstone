@@ -173,7 +173,7 @@ struct CategoryView: View {
             .frame(width: 50, height: 50)
             .foregroundColor(.blue)
             .padding(.leading, 5)
-          Text(category.prefix(1).capitalized+category.dropFirst())
+          Text(category.prefix(1).capitalized + category.dropFirst())
             .fontWeight(.bold)
             .foregroundColor(Color(.white))
             .shadow(radius: 10)
@@ -189,10 +189,10 @@ struct CategoryView: View {
       .listStyle(.insetGrouped)
       .navigationTitle("Categories")
     }
-     .task {
-        await viewModel.getEntries()
-        extractCategories()
-    }
+    .task {
+      await viewModel.getEntries()
+      extractCategories()
+     }
     .padding(.horizontal)
  }
 

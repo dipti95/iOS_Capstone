@@ -13,31 +13,27 @@ struct ProductViewByCategory: View {
 
 
   var body: some View {
-    NavigationStack{
+    NavigationStack {
       VStack {
         List(products, id: \.self) { product in
           if(product.category == category) {
-            NavigationLink(destination: DetailProductView(product: product)){
-              
-              
+            NavigationLink(destination: DetailProductView(product: product)) {
               VStack(alignment: .leading, spacing: 10) {
                 AsyncImage(url: product.thumbnail) { image in
                   image
                     .resizable()
                     .scaledToFit()
                 } placeholder: {
-                  Image("placeholder") // Replace with a custom placeholder image
+                  Image("placeholder")
                     .resizable()
                     .scaledToFit()
                 }
                 .frame(width: 300, height: 200)
                 .cornerRadius(10)
                 .shadow(radius: 5)
-                
-                Text("Price: \(product.price)")
+                Text("$\(String(format: "%.2f", Double(product.price)))")
                   .font(.headline)
                   .foregroundColor(.primary)
-                
                 Text("Brand: \(product.brand)")
                   .font(.subheadline)
                   .foregroundColor(.secondary)

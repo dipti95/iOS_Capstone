@@ -23,6 +23,7 @@
 		374F674E2B02E944005A959E /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F674D2B02E944005A959E /* CartView.swift */; };
 		375F7A472B01163600070710 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F7A462B01163600070710 /* ErrorView.swift */; };
 		375F7A492B0150A000070710 /* DetailProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F7A482B0150A000070710 /* DetailProductView.swift */; };
+		3766AAF72B102D3C0011FF4D /* MyAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766AAF62B102D3C0011FF4D /* MyAccountView.swift */; };
 		377185F72B0E59D300680073 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377185F62B0E59D300680073 /* CategoryView.swift */; };
 		377185F92B0EC6F000680073 /* ProductViewByCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377185F82B0EC6F000680073 /* ProductViewByCategory.swift */; };
 		377185FB2B0EE9CD00680073 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377185FA2B0EE9CD00680073 /* CheckoutView.swift */; };
@@ -70,6 +71,7 @@
 		374F674D2B02E944005A959E /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 		375F7A462B01163600070710 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		375F7A482B0150A000070710 /* DetailProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProductView.swift; sourceTree = "<group>"; };
+		3766AAF62B102D3C0011FF4D /* MyAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountView.swift; sourceTree = "<group>"; };
 		377185F62B0E59D300680073 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		377185F82B0EC6F000680073 /* ProductViewByCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewByCategory.swift; sourceTree = "<group>"; };
 		377185FA2B0EE9CD00680073 /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				377185F62B0E59D300680073 /* CategoryView.swift */,
 				377185F82B0EC6F000680073 /* ProductViewByCategory.swift */,
 				377185FA2B0EE9CD00680073 /* CheckoutView.swift */,
+				3766AAF62B102D3C0011FF4D /* MyAccountView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				377444982B0C4D7A0051CADB /* LaunchView.swift in Sources */,
 				374F674E2B02E944005A959E /* CartView.swift in Sources */,
 				374F67482B02A9DE005A959E /* CartViewModel.swift in Sources */,
+				3766AAF72B102D3C0011FF4D /* MyAccountView.swift in Sources */,
 				370696D42B03A5F000B1D172 /* WishlistViewModel.swift in Sources */,
 				374F674C2B02AC7A005A959E /* FileManager.swift in Sources */,
 				37A9682C2AFFD6DD00ADBA4A /* AllProductView.swift in Sources */,
@@ -563,6 +567,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VelvetVibe;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -592,6 +597,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VelvetVibe;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -12,48 +12,54 @@ struct WishlistView: View {
 
   var body: some View {
     NavigationView {
-      if wishlist.productsInWishlist.isEmpty {
-        VStack {
-          Image("emptyCartImage")
-            .resizable()
-            .scaledToFit()
+      VStack {
+        if wishlist.productsInWishlist.isEmpty {
+          VStack {
+            Image("shoppingBags")
+              .resizable()
+              .scaledToFit()
 
-          Text("No WishList Selected")
-            .font(.system(size: 36, weight: .light, design: .rounded))
-            .multilineTextAlignment(.center)
-            .padding()
-        }
-      } else {
-        VStack {
-          List {
-            ForEach(wishlist.productsInWishlist, id: \.self) { product in
-              HStack {
-                AsyncImage(
-                  url: product.thumbnail,
-                  content: { image in
-                    image.resizable()
-                      .aspectRatio(contentMode: .fit)
-                  },
-                  placeholder: {
-                    ProgressView()
-                  }
-                )
+            Text("Product is not Selected in WishList")
+              .font(.system(size: 36, weight: .light, design: .rounded))
+              .multilineTextAlignment(.center)
+              .padding()
+          }
+        } else {
+          VStack {
+            List {
+              ForEach(wishlist.productsInWishlist, id: \.self) { product in
+                HStack {
+                  AsyncImage(
+                    url: product.thumbnail,
+                    content: { image in
+                      image.resizable()
+                        .aspectRatio(contentMode: .fit)
+                    },
+                    placeholder: {
+                      ProgressView()
+                    }
+                  )
 
-                Spacer()
-                Text(product.title)
+                  Spacer()
+                  Text(product.title)
 
-                Spacer()
+                  Spacer()
 
-                Text("$\(String(format: "%.2f", product.price))")
+                  Text("$\(String(format: "%.2f", product.price))")
 
-                Spacer()
+                  Spacer()
+                }
               }
+              .onDelete(perform: deleteProductItems)
             }
           }
-          .navigationTitle("Cart")
         }
       }
+      .navigationTitle("Wish List")
     }
+  }
+  func deleteProductItems(at offsets: IndexSet) {
+    wishlist.productsInWishlist.remove(atOffsets: offsets)
   }
 }
 
