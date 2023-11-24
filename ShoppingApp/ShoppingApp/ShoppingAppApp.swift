@@ -13,6 +13,8 @@ struct ShoppingAppApp: App {
     WindowGroup {
       ContentView()
         .environmentObject(CartViewModel())
+        .environmentObject(OrderViewModel())
+        .environmentObject(WishlistViewModel())
     }
   }
 }

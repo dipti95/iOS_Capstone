@@ -13,22 +13,34 @@ struct DetailProductView: View {
   var product: Product
   @State private var currentImageIndex = 0
   @State var showItemAdded = false
+  @State private var isInWishlist = false
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 0) {
-      Text("Title: \(product.title)")
-        .font(.title2)
-        .bold()
-      imageSection
-      Text("Description:")
-        .font(.headline)
-      Text(product.description)
+    ScrollView {
+      VStack(alignment: .leading, spacing: 10) {
+        Text("Title: \(product.title)")
+          .font(.title2)
+          .bold()
+          .padding(.horizontal)
 
-      Text("Rating: \(product.rating)")
+        imageSection
 
-      actionButtons
+        Text("Description:")
+          .font(.headline)
+          .padding(.horizontal)
+
+        Text(product.description)
+          .padding(.horizontal)
+
+        Text("Rating: \(String(format: "%.2f", Double(product.rating)))")
+          .padding(.horizontal)
+        Text("Price: $\(String(format: "%.2f", Double(product.price)))")
+          .padding(.horizontal)
+
+        actionButtons
+      }
+      .padding(.bottom)
     }
-    .padding(0)
   }
 
   private var imageSection: some View {
@@ -38,27 +50,37 @@ struct DetailProductView: View {
           image
             .resizable()
             .scaledToFit()
-          Button(action: addToWishlist) {
-            Text("Wishlist")
-          }
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .overlay(
+              Button(action: addToWishlist) {
+                Image(systemName: isInWishlist ? "heart.circle" : "heart.circle.fill")
+                  .imageScale(.large)
+                  .foregroundColor(.red)
+              }
+              .padding(16)
+              , alignment: .topTrailing
+            )
         } placeholder: {
-          ProgressView()
+           ProgressView()
         }
-        .frame(width: 300)
-        .cornerRadius(10)
+        .frame(height: 300)
+        .padding(.horizontal)
+
+        imageNavigationButtons
       } else {
         Text("No Image Available")
-          .frame(width: 300)
+          .frame(height: 300)
           .background(Color.gray.opacity(0.2))
           .cornerRadius(10)
+          .padding(.horizontal)
       }
-
-      imageNavigationButtons
     }
   }
 
+
   private var imageNavigationButtons: some View {
-    HStack {
+    HStack { 
       Button(action: previousImage) {
         Image(systemName: "arrow.backward.circle.fill")
           .font(.largeTitle)
@@ -75,45 +97,55 @@ struct DetailProductView: View {
       }
       .disabled(currentImageIndex == product.images.count - 1)
     }
+    .padding()
   }
 
-  private var actionButtons: some View {
-    HStack {
-      Button(action: addToCart) {
-        Text("Add to Cart")
+    private var actionButtons: some View {
+      HStack {
+        Button(action: addToCart) {
+          Text("Add to Cart")
+            .bold()
+            .foregroundColor(.white)
+            .padding()
+            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(20)
+            .shadow(radius: 3)
+        }
+        .alert("Added to Cart", isPresented: $showItemAdded) {
+        } message: {
+          Text("\(product.title)")
+        }
       }
-      .alert("Added to Cart", isPresented: $showItemAdded) {
-      } message: {
-        Text("\(product.title)")
-      }
+      .padding(.horizontal)
     }
-  }
 
-  private func nextImage() {
-    if currentImageIndex < product.images.count - 1 {
-      withAnimation {
+    private func nextImage() {
+      if currentImageIndex < product.images.count - 1 {
+        withAnimation {
         currentImageIndex += 1
+        }
       }
     }
-  }
 
-  private func previousImage() {
-    if currentImageIndex > 0 {
-      withAnimation {
-        currentImageIndex -= 1
+    private func previousImage() {
+      if currentImageIndex > 0 {
+        withAnimation {
+          currentImageIndex -= 1
+        }
       }
     }
-  }
 
-  private func addToWishlist() {
-    wishlist.productsInWishlist.append(product)
-    showItemAdded.toggle()
-  }
+    private func addToWishlist() {
+      if(!wishlist.productsInWishlist.contains(product)){
+        wishlist.productsInWishlist.append(product)
+      }
+      isInWishlist = true
+    }
 
-  private func addToCart() {
-    cart.productsInCart.append(product)
-    showItemAdded.toggle()
-  }
+    private func addToCart() {
+      cart.productsInCart.append(product)
+      showItemAdded.toggle()
+    }
 }
 
 #Preview {
@@ -127,13 +159,14 @@ struct DetailProductView: View {
     stock: 94,
     brand: "Apple",
     category: "smartphones",
-    thumbnail: URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!,
+    thumbnail: URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg"),
     images: [
-      URL(string: "https://i.dummyjson.com/data/products/1/1.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/2.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/3.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/4.jpg")!,
-      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")!]
+      URL(string: "https://i.dummyjson.com/data/products/1/1.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/2.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/3.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/4.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")
+    ]
   )
   )
   .environmentObject(CartViewModel())

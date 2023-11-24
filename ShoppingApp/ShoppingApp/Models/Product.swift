@@ -25,8 +25,8 @@ struct Product: Codable, Hashable {
   let stock: Int
   let brand: String
   let category: String
-  let thumbnail: URL
-  let images: [URL]
+  let thumbnail: URL?
+  let images: [URL?]
 
   enum CodingKeys: String, CodingKey {
     case id

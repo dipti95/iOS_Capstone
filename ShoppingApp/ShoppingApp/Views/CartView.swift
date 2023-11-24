@@ -12,65 +12,68 @@ struct CartView: View {
   @EnvironmentObject var order: OrderViewModel
   @State var showItemAdded = false
 
-    var body: some View {
-      NavigationView {
-        if cart.productsInCart.isEmpty {
-          VStack {
-            Image("emptyCartImage")
-              .resizable()
-              .scaledToFit()
+  var body: some View {
+    NavigationView {
+      if cart.productsInCart.isEmpty {
+        VStack {
+          Image("emptyCartImage")
+            .resizable()
+            .scaledToFit()
 
-            Text("Cart is empty")
-              .font(.system(size: 36, weight: .light, design: .rounded))
-              .multilineTextAlignment(.center)
-              .padding()
-          }
-        } else {
-          VStack {
-            let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
-            List {
-              ForEach(cart.productsInCart, id: \.self) { product in
-                HStack {
-                  AsyncImage(
-                    url: product.thumbnail,
-                    content: { image in
-                      image.resizable()
-                        .aspectRatio(contentMode: .fit)
-                    },
-                    placeholder: {
-                      ProgressView()
-                    }
-                  )
-
+          Text("Cart is empty")
+            .font(.system(size: 36, weight: .light, design: .rounded))
+            .multilineTextAlignment(.center)
+            .padding()
+        }
+      } else {
+        VStack {
+          let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
+          List {
+            ForEach(cart.productsInCart, id: \.self) { product in
+              HStack {
+                AsyncImage(
+                  url: product.thumbnail,
+                  content: { image in
+                    image.resizable()
+                      .aspectRatio(contentMode: .fit)
+                  },
+                  placeholder: {
+                    ProgressView()
+                  }
+                )
+                VStack {
                   Spacer()
-                  Text(product.title)
-
-                  Spacer()
-
-                  Text("$\(String(format: "%.2f", product.price))")
-
+                  Text("Title: \(product.title)")
+                  Text("Price: $\(String(format: "%.2f", product.price))")
                   Spacer()
                 }
               }
-              Text("Total: $\(String(format: "%.2f", totalPrice))")
-              Button(action: checkout) {
-                Text("Checkout")
-              }
-              .alert("Added to Cart", isPresented: $showItemAdded) {
-              } message: {
-                Text("orderPlaced")
-              }
             }
-
-            .navigationTitle("Cart")
+            Text("Total: $\(String(format: "%.2f", totalPrice))")
+            NavigationLink {
+              CheckoutView()
+            } label: {
+              Text("Checkout")
+                .bold()
+                .foregroundColor(.white)
+                .padding()
+                .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                .cornerRadius(20)
+                .shadow(radius: 3)
+            }
+            .disabled(cart.productsInCart.isEmpty)
           }
+
+          .navigationTitle("Cart")
         }
       }
     }
+  }
 
   private func checkout() {
     let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
     order.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
+    cart.productsInCart = []
     showItemAdded.toggle()
   }
 }
