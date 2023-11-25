@@ -11,16 +11,16 @@ import Foundation
 class CartViewModel: ObservableObject {
   @Published var productsInCart: [Product] = [] {
     didSet {
-      saveItemsInShoppingCartToDocumentDirectory()
+      saveItemsInCartToDocumentDirectory()
     }
   }
 
   init() {
-    loadItemsInShoppingCartFromDocumentDirectory()
+    loadItemsInCartFromDocumentDirectory()
   }
 
 
-  func saveItemsInShoppingCartToDocumentDirectory() {
+  func saveItemsInCartToDocumentDirectory() {
     print(Bundle.main.bundleURL)
     print(FileManager.documentsDirectoryURL)
     let encoder = JSONEncoder()
@@ -38,7 +38,7 @@ class CartViewModel: ObservableObject {
   }
 
 
-  func loadItemsInShoppingCartFromDocumentDirectory() {
+  func loadItemsInCartFromDocumentDirectory() {
     let jsonCartDataURL = FileManager.documentsDirectoryURL.appendingPathComponent("ProductInCart")
       .appendingPathExtension("json")
     do {

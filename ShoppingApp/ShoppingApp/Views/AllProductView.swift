@@ -33,7 +33,7 @@ struct AllProductView: View {
                   } placeholder: {
                     ProgressView()
                   }
-                  .frame(width: 300, height: 200)
+//                  .frame(width: 300, height: 200)
                   .cornerRadius(10)
                   .shadow(radius: 5)
                   Text("$\(String(format: "%.2f", Double(product.price)))")

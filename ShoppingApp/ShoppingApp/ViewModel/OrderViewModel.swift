@@ -11,16 +11,16 @@ import Foundation
 class OrderViewModel: ObservableObject {
   @Published var order: [Order] = [] {
     didSet {
-      saveItemsInShoppingCartToDocumentDirectory()
+      saveItemsInOrdersToDocumentDirectory()
     }
   }
 
   init() {
-    loadItemsInShoppingCartFromDocumentDirectory()
+    loadItemsInOrdersFromDocumentDirectory()
   }
 
 
-  func saveItemsInShoppingCartToDocumentDirectory() {
+  func saveItemsInOrdersToDocumentDirectory() {
     print(Bundle.main.bundleURL)
     print(FileManager.documentsDirectoryURL)
     let encoder = JSONEncoder()
@@ -29,7 +29,7 @@ class OrderViewModel: ObservableObject {
     do {
       let wishlistData = try encoder.encode(order)
 
-      let jsonWishlistDataURL = FileManager.documentsDirectoryURL.appendingPathComponent("wishlist")
+      let jsonWishlistDataURL = FileManager.documentsDirectoryURL.appendingPathComponent("orders")
         .appendingPathExtension("json")
       try wishlistData.write(to: jsonWishlistDataURL)
     } catch {
@@ -38,8 +38,8 @@ class OrderViewModel: ObservableObject {
   }
 
 
-  func loadItemsInShoppingCartFromDocumentDirectory() {
-    let jsonWishlistDataURL = FileManager.documentsDirectoryURL.appendingPathComponent("wishlist")
+  func loadItemsInOrdersFromDocumentDirectory() {
+    let jsonWishlistDataURL = FileManager.documentsDirectoryURL.appendingPathComponent("orders")
       .appendingPathExtension("json")
     do {
       let jsonWishlistDataFromURL = try Data(contentsOf: jsonWishlistDataURL)
@@ -49,7 +49,7 @@ class OrderViewModel: ObservableObject {
       order = decodedData
       return
     } catch {
-      print("Initial run of app or failure loading JSON file from Documents Directory")
+      print("Failure to load JSON file from Documents Directory")
     }
   }
 }
