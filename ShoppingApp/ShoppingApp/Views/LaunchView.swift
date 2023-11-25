@@ -16,19 +16,20 @@ extension String {
 
 struct LaunchView: View {
   let text = "VelvetVibe"
-  let isSliding: Bool = true
   let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink]
 
 
   @State private var animate = false
   var body: some View {
     ZStack {
-      Image("blackbagBackground")
-        .resizable()
-        .aspectRatio(contentMode: .fill)
-        .edgesIgnoringSafeArea(.all)
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .background(Color.clear)
+      GeometryReader { geometry in
+        Image("blackbagBackground")
+          .resizable()
+          .scaledToFill()
+          .frame(width: geometry.size.width, height: geometry.size.height)
+          .clipped()
+      }
+      .edgesIgnoringSafeArea(.all)
       HStack(spacing: 0) {
         ForEach(0..<text.count, id: \.self) { index in
           Text(String(text[text.index(text.startIndex, offsetBy: index)]))

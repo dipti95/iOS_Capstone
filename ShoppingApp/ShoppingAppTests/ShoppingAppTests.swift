@@ -30,60 +30,51 @@ func test_decode_items() {
       XCTAssertNil(error, "Error: \(error?.localizedDescription ?? "")")
 
       do {
-          // Check that the response is an HTTP response with a 200 status code
-          let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
-          XCTAssertEqual(httpResponse.statusCode, 200, "HTTP status code is not 200")
+        let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+        XCTAssertEqual(httpResponse.statusCode, 200, "HTTP status code is not 200")
 
-          // Determine the structure of the JSON data (array or dictionary)
-          guard let jsonData = data else {
-              XCTFail("No data received from the server")
-              return
-          }
+        guard let jsonData = data else {
+          XCTFail("No data received from the server")
+          return
+        }
 
-          let decodedData: Any
-          do {
-              // Attempt to decode the JSON data as an array
-              decodedData = try JSONDecoder().decode([Product].self, from: jsonData)
-          } catch {
-              // If decoding as an array fails, try decoding as a dictionary
-              decodedData = try JSONSerialization.jsonObject(with: jsonData, options: [])
-          }
+        let decodedData: Any
+        do {
+          decodedData = try JSONDecoder().decode([Product].self, from: jsonData)
+        } catch {
+          decodedData = try JSONSerialization.jsonObject(with: jsonData, options: [])
+        }
 
-          // Now you have `decodedData`, which can be either an array or a dictionary
-          // You can further validate and test the structure based on its actual type
-          if let productArray = decodedData as? [Product] {
-              // Handle the case when it's an array
-              XCTAssertFalse(productArray.isEmpty, "Product array should not be empty")
-          } else if let productDictionary = decodedData as? [String: Any] {
-              // Handle the case when it's a dictionary
-              // You can perform further checks on the dictionary structure here
-          } else {
-              XCTFail("Unexpected JSON structure")
-          }
+        if let productArray = decodedData as? [Product] {
+          XCTAssertFalse(productArray.isEmpty, "Product array should not be empty")
+        } else if let productDictionary = decodedData as? [String: Any] {
+        } else {
+          XCTFail("Unexpected JSON structure")
+        }
     } catch {
-          XCTFail("Test encountered an error: \(error)")
+      XCTFail("Test encountered an error: \(error)")
       }
-    }.resume()
+    }
+    .resume()
   } else {
-      XCTFail("Invalid URL")
+    XCTFail("Invalid URL")
   }
-
-  wait(for: [expectation], timeout: 5.0) 
+  wait(for: [expectation], timeout: 5.0)
 }
 
 
-    func testExample() throws {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    // Any test you write for XCTest can be annotated as throws and async.
-    // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-    // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+  func testExample() throws {
+  // This is an example of a functional test case.
+  // Use XCTAssert and related functions to verify your tests produce the correct results.
+  // Any test you write for XCTest can be annotated as throws and async.
+  // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
+  // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+  }
 
-    func testPerformanceExample() throws {
-      // This is an example of a performance test case.
-      self.measure {
-      // Put the code you want to measure the time of here.
-      }
+  func testPerformanceExample() throws {
+    // This is an example of a performance test case.
+    self.measure {
+    // Put the code you want to measure the time of here.
     }
+  }
 }

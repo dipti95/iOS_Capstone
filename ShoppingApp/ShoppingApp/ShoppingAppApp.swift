@@ -15,6 +15,7 @@ struct ShoppingAppApp: App {
         .environmentObject(CartViewModel())
         .environmentObject(OrderViewModel())
         .environmentObject(WishlistViewModel())
+        .environmentObject(OrderViewModel())
     }
   }
 }

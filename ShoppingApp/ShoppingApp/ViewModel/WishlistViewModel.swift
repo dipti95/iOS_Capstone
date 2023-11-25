@@ -11,16 +11,16 @@ import Foundation
 class WishlistViewModel: ObservableObject {
   @Published var productsInWishlist: [Product] = [] {
     didSet {
-      saveItemsInShoppingCartToDocumentDirectory()
+      saveItemsInWishlistToDocumentDirectory()
     }
   }
 
   init() {
-    loadItemsInShoppingCartFromDocumentDirectory()
+    loadItemsInWishlistFromDocumentDirectory()
   }
 
 
-  func saveItemsInShoppingCartToDocumentDirectory() {
+  func saveItemsInWishlistToDocumentDirectory() {
     print(Bundle.main.bundleURL)
     print(FileManager.documentsDirectoryURL)
     let encoder = JSONEncoder()
@@ -38,7 +38,7 @@ class WishlistViewModel: ObservableObject {
   }
 
 
-  func loadItemsInShoppingCartFromDocumentDirectory() {
+  func loadItemsInWishlistFromDocumentDirectory() {
     let jsonWishlistDataURL = FileManager.documentsDirectoryURL.appendingPathComponent("wishlist")
       .appendingPathExtension("json")
     do {
@@ -49,7 +49,7 @@ class WishlistViewModel: ObservableObject {
       productsInWishlist = decodedData
       return
     } catch {
-      print("Initial run of app or failure loading JSON file from Documents Directory")
+      print("Failure to load JSON file from Documents Directory")
     }
   }
 }

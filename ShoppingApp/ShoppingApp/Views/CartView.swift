@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CartView: View {
   @EnvironmentObject var cart: CartViewModel
-  @EnvironmentObject var order: OrderViewModel
+  @EnvironmentObject var orders: OrderViewModel
   @State var showItemAdded = false
 
   var body: some View {
@@ -57,7 +57,13 @@ struct CartView: View {
                 .bold()
                 .foregroundColor(.white)
                 .padding()
-                .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                .background(
+                  LinearGradient(
+                    gradient: Gradient(
+                      colors:
+                        [Color.blue, Color.purple]),
+                    startPoint: .leading,
+                    endPoint: .trailing))
                 .cornerRadius(20)
                 .shadow(radius: 3)
             }
@@ -72,7 +78,7 @@ struct CartView: View {
 
   private func checkout() {
     let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
-    order.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
+    orders.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
     cart.productsInCart = []
     showItemAdded.toggle()
   }
