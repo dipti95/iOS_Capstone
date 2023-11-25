@@ -15,39 +15,39 @@ struct ContentView: View {
     NavigationView {
       Group {
         if isActive {
-            LaunchView()
+          LaunchView()
         } else {
-            VStack {
-              TabView {
-                CategoryView(viewModel: ProductsViewModel())
-                  .tabItem {
-                      Label("Categories", systemImage: "list.bullet.circle")
-                  }
-
-                AllProductView(viewModel: ProductsViewModel())
-                  .tabItem {
-                      Label("All Products", systemImage: "list.bullet.circle")
-                  }
-
-                CartView()
-                  .tabItem {
-                      Label("Cart", systemImage: "cart.fill")
-                  }
-                MyAccountView()
-                 .tabItem {
-                    Label("Account", systemImage: "person.crop.circle.fill")
-                 }
-              }
-              .navigationBarItems(leading: GradientTitleView(title: "VelvetVibe", colors: colors))
-              .navigationBarItems(trailing:
-                NavigationLink(destination: WishlistView()) {
-                  Image(systemName: "heart.fill")
-                    .imageScale(.large)
-                    .foregroundColor(.red)
+          VStack {
+            TabView {
+              CategoryView(viewModel: ProductsViewModel())
+                .tabItem {
+                  Label("Categories", systemImage: "list.bullet.circle")
                 }
-              )
+
+              AllProductView(viewModel: ProductsViewModel())
+                .tabItem {
+                  Label("All Products", systemImage: "list.bullet.circle")
+                }
+
+              CartView()
+                .tabItem {
+                  Label("Cart", systemImage: "cart.fill")
+                }
+              MyAccountView()
+                .tabItem {
+                  Label("Account", systemImage: "person.crop.circle.fill")
+                }
             }
+            .navigationBarItems(leading: GradientTitleView(title: "VelvetVibe", colors: colors))
+            .navigationBarItems(trailing:
+              NavigationLink(destination: WishlistView()) {
+              Image(systemName: "heart.fill")
+                .imageScale(.large)
+                .foregroundColor(.red)
+        }
+          )
           }
+        }
       }
     }
     .onAppear {
@@ -70,12 +70,17 @@ struct GradientTitleView: View {
       .fontWeight(.bold)
       .foregroundColor(.clear)
       .background(
-      LinearGradient(gradient: Gradient(colors: colors), startPoint: .leading, endPoint: .trailing)
-          .mask(Text(title)
-              .font(.largeTitle)
-              .fontWeight(.bold)
-          )
+        LinearGradient(
+          gradient: Gradient(colors: colors),
+          startPoint: .leading,
+          endPoint: .trailing
         )
+        .mask(
+          Text(title)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+        )
+    )
   }
 }
 

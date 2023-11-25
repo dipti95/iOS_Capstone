@@ -28,7 +28,6 @@ struct ProductViewByCategory: View {
                     .resizable()
                     .scaledToFit()
                 }
-                //.frame(width: 300, height: 200)
                 .cornerRadius(10)
                 .shadow(radius: 5)
                 Text("$\(String(format: "%.2f", Double(product.price)))")
@@ -51,7 +50,3 @@ struct ProductViewByCategory: View {
     }
   }
 }
-
-//#Preview {
-//  ProductViewByCategory()
-//}

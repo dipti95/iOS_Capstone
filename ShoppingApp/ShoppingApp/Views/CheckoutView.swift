@@ -12,73 +12,120 @@ struct CheckoutView: View {
   @EnvironmentObject var order: OrderViewModel
   private let paymentTypes = ["Credit Card", "Debit Card", "Apple Pay", "PayPal"]
   @State private var paymentType = "Credit Card"
-  @State var showItemAdded = false
-  @State private var displayCreditCardEntry = false
   @State private var cardNumber = ""
   @State private var email = ""
   @State private var password = ""
-  @State private var showConfirmation = false
-  @State private var carrotPointsEarnedFromOrder = 0
-  @AppStorage("firstName") var firstName = ""
-  @AppStorage("lastName") var lastName = ""
-  @AppStorage("address") var address = ""
-  @AppStorage("city") var city = ""
+  @AppStorage("firstName")
+  var firstName = ""
 
+  @AppStorage("lastName")
+  var lastName = ""
+
+  @AppStorage("address")
+  var address = ""
+
+  @AppStorage("city")
+  var city = ""
 
   var totalPrice: Double {
-    return cart.productsInCart.reduce(0) { $0 + $1.price }
+    cart.productsInCart.reduce(0) { $0 + $1.price }
   }
 
   var body: some View {
-    Form {
-      Section("Payment") {
-        Picker("Payment Type", selection: $paymentType) {
-          ForEach(paymentTypes, id: \.self) {
-            Text($0)
-          }
+    NavigationView {
+      ScrollView {
+        VStack(spacing: 20) {
+          paymentTypeSection
+          billingInformationSection
+          totalSection
         }
-
-        if paymentType == "Credit Card" || paymentType == "Debit Card" {
-          TextField("Card number", text: $cardNumber.animation())
-        }
-        if paymentType == "Apple Pay" || paymentType == "PayPal" {
-          TextField("Email", text: $email.animation())
-          TextField("Password", text: $password.animation())
-        }
-      }
-
-      Section("Billing Information") {
-        TextField("First Name", text: $firstName)
-        TextField("Last Name", text: $lastName)
-        TextField("Address", text: $address)
-        TextField("City", text: $city)
-      }
-
-      Section("Total") {
-        Text("Total Amount: $\(String(format: "%.2f", totalPrice))")
-        Section {
-          Button(action: checkout) {
-            Text("Place Order")
-              .bold()
-              .foregroundColor(.white)
-              .padding()
-              .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
-              .cornerRadius(20)
-              .shadow(radius: 3)
-          }
-          .listRowBackground(Color.clear)
-        }
+        .padding()
       }
       .navigationTitle("Checkout")
       .navigationBarTitleDisplayMode(.inline)
     }
   }
 
+  var paymentTypeSection: some View {
+    GroupBox(label: Label("Payment", systemImage: "creditcard")) {
+      Picker("Payment Type", selection: $paymentType) {
+        ForEach(paymentTypes, id: \.self, content: Text.init)
+      }
+      .pickerStyle(SegmentedPickerStyle())
+
+      if paymentType == "Credit Card" || paymentType == "Debit Card" {
+        TextField("Card number", text: $cardNumber)
+          .padding()
+          .background(Color(.systemGray6))
+          .cornerRadius(8)
+      } else {
+        TextField("Email", text: $email)
+          .padding()
+          .background(Color(.systemGray6))
+          .cornerRadius(8)
+        SecureField("Password", text: $password)
+          .padding()
+          .background(Color(.systemGray6))
+          .cornerRadius(8)
+      }
+    }
+  }
+
+  var billingInformationSection: some View {
+    GroupBox(label: Label("Billing Information", systemImage: "person.crop.circle")) {
+      TextField("First Name", text: $firstName)
+
+      TextField("Last Name", text: $lastName)
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(8)
+      TextField("Address", text: $address)
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(8)
+      TextField("City", text: $city)
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(8)
+    }
+  }
+
+  var totalSection: some View {
+    VStack(alignment: .center, spacing: 10) {
+      Text("Total Amount: $\(totalPrice, specifier: "%.2f")")
+        .font(.title2)
+      Button(action: checkout) {
+        Text("Place Order")
+          .bold()
+          .foregroundColor(.white)
+          .padding()
+          .background(
+            LinearGradient(
+              gradient: Gradient(
+                colors: [
+                  Color.blue,
+                  Color.purple
+                ]
+              ),
+              startPoint: .leading,
+              endPoint: .trailing
+            )
+          )
+          .cornerRadius(20)
+          .shadow(radius: 3)
+      }
+      .frame(maxWidth: .infinity)
+      .listRowBackground(Color.clear)
+    }
+    .padding()
+    .background(Color(.systemGray5))
+    .cornerRadius(12)
+  }
+
   private func checkout() {
     let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
     order.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
     cart.productsInCart = []
-    showItemAdded.toggle()
   }
 }
 

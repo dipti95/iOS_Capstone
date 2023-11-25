@@ -62,7 +62,7 @@ struct DetailProductView: View {
               , alignment: .topTrailing
             )
         } placeholder: {
-           ProgressView()
+          ProgressView()
         }
         .frame(height: 300)
         .padding(.horizontal)
@@ -80,7 +80,7 @@ struct DetailProductView: View {
 
 
   private var imageNavigationButtons: some View {
-    HStack { 
+    HStack {
       Button(action: previousImage) {
         Image(systemName: "arrow.backward.circle.fill")
           .font(.largeTitle)
@@ -100,24 +100,30 @@ struct DetailProductView: View {
     .padding()
   }
 
-    private var actionButtons: some View {
-      HStack {
-        Button(action: addToCart) {
-          Text("Add to Cart")
-            .bold()
-            .foregroundColor(.white)
-            .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
-            .cornerRadius(20)
-            .shadow(radius: 3)
-        }
-        .alert("Added to Cart", isPresented: $showItemAdded) {
-        } message: {
-          Text("\(product.title)")
-        }
+  private var actionButtons: some View {
+    HStack {
+      Button(action: addToCart) {
+        Text("Add to Cart")
+          .bold()
+          .foregroundColor(.white)
+          .padding()
+          .background(
+            LinearGradient(
+              gradient: Gradient(
+                colors:
+                  [Color.blue, Color.purple]),
+              startPoint: .leading,
+              endPoint: .trailing))
+          .cornerRadius(20)
+          .shadow(radius: 3)
       }
-      .padding(.horizontal)
+      .alert("Added to Cart", isPresented: $showItemAdded) {
+      } message: {
+        Text("\(product.title)")
+      }
     }
+    .padding(.horizontal)
+  }
 
     private func nextImage() {
       if currentImageIndex < product.images.count - 1 {
@@ -136,7 +142,7 @@ struct DetailProductView: View {
     }
 
     private func addToWishlist() {
-      if(!wishlist.productsInWishlist.contains(product)){
+      if(!wishlist.productsInWishlist.contains(product)) {
         wishlist.productsInWishlist.append(product)
       }
       isInWishlist = true

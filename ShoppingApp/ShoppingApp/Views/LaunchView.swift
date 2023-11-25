@@ -16,7 +16,6 @@ extension String {
 
 struct LaunchView: View {
   let text = "VelvetVibe"
-  let isSliding: Bool = true
   let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink]
 
 

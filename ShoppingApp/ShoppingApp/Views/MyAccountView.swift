@@ -19,7 +19,13 @@ struct MyAccountView: View {
             .bold()
             .foregroundColor(.white)
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+            .background(
+              LinearGradient(
+                gradient: Gradient(
+                  colors:
+                    [Color.blue, Color.purple]),
+                startPoint: .leading,
+                endPoint: .trailing))
             .cornerRadius(20)
             .shadow(radius: 3)
         }
@@ -31,5 +37,5 @@ struct MyAccountView: View {
 
 #Preview {
   MyAccountView()
-   .environmentObject(OrderViewModel())
+    .environmentObject(OrderViewModel())
 }
