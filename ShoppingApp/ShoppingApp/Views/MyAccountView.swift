@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MyAccountView: View {
   var body: some View {
-    VStack{
-      NavigationStack{
+    VStack {
+      NavigationStack {
         Text("Hello Dipti")
-        NavigationLink{
-          Text("testing")
+        NavigationLink {
+          OrdersViews()
         }label: {
           Text("Your Orders")
             .bold()
@@ -22,7 +22,6 @@ struct MyAccountView: View {
             .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(20)
             .shadow(radius: 3)
-
         }
         .navigationTitle("Your Account")
       }
@@ -32,4 +31,5 @@ struct MyAccountView: View {
 
 #Preview {
   MyAccountView()
+   .environmentObject(OrderViewModel())
 }

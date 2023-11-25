@@ -10,7 +10,7 @@ import SwiftUI
 struct CheckoutView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var order: OrderViewModel
-  private let paymentTypes = ["Credit Card","Debit Card", "Apple Pay", "PayPal"]
+  private let paymentTypes = ["Credit Card", "Debit Card", "Apple Pay", "PayPal"]
   @State private var paymentType = "Credit Card"
   @State var showItemAdded = false
   @State private var displayCreditCardEntry = false
