@@ -34,7 +34,7 @@ struct DetailProductView: View {
 
         Text("Rating: \(String(format: "%.2f", Double(product.rating)))")
           .padding(.horizontal)
-        Text("Price: $\(String(format: "%.2f", Double(product.price)))")
+        Text("Price: \(product.price, format: .currency(code: "USD"))")
           .padding(.horizontal)
 
         actionButtons

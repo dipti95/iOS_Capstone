@@ -15,7 +15,7 @@ struct ProductApi: Codable {
   let limit: Int
 }
 
-struct Product: Codable, Hashable {
+struct Product: Codable, Hashable, Identifiable {
   let id: Int
   let title: String
   let description: String

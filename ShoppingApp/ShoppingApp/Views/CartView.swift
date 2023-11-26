@@ -13,7 +13,7 @@ struct CartView: View {
   @State var showItemAdded = false
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       if cart.productsInCart.isEmpty {
         VStack {
           Image("emptyCartImage")
@@ -44,7 +44,7 @@ struct CartView: View {
                 VStack {
                   Spacer()
                   Text("Title: \(product.title)")
-                  Text("Price: $\(String(format: "%.2f", product.price))")
+                  Text("Price \(product.price, format: .currency(code: "USD"))")
                   Spacer()
                 }
               }

@@ -28,7 +28,7 @@ struct WishlistView: View {
           VStack {
             List {
               ForEach(wishlist.productsInWishlist, id: \.self) { product in
-                HStack {
+                VStack {
                   AsyncImage(
                     url: product.thumbnail,
                     content: { image in
@@ -39,15 +39,8 @@ struct WishlistView: View {
                       ProgressView()
                     }
                   )
-
-                  Spacer()
-                  Text(product.title)
-
-                  Spacer()
-
-                  Text("$\(String(format: "%.2f", product.price))")
-
-                  Spacer()
+                    Text("Title: \(product.title)")
+                    Text("Price: \(product.price, format: .currency(code: "USD"))")
                 }
               }
               .onDelete(perform: deleteProductItems)

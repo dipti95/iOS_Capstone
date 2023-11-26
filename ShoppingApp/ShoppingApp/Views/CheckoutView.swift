@@ -7,11 +7,26 @@
 
 import SwiftUI
 
+enum PaymentType: String, CaseIterable {
+  case creditCard
+  case debitCard
+  case applePay
+  case payPal
+
+  var displayName: String {
+    switch self {
+    case .creditCard: return "Credit Card"
+    case .debitCard: return "Debit Card"
+    case .applePay: return "Apple Pay"
+    case .payPal: return "PayPal"
+    }
+  }
+}
+
 struct CheckoutView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var order: OrderViewModel
-  private let paymentTypes = ["Credit Card", "Debit Card", "Apple Pay", "PayPal"]
-  @State private var paymentType = "Credit Card"
+  @State private var paymentType: PaymentType = .creditCard
   @State private var cardNumber = ""
   @State private var email = ""
   @State private var password = ""
@@ -32,7 +47,7 @@ struct CheckoutView: View {
   }
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       ScrollView {
         VStack(spacing: 20) {
           paymentTypeSection
@@ -49,11 +64,13 @@ struct CheckoutView: View {
   var paymentTypeSection: some View {
     GroupBox(label: Label("Payment", systemImage: "creditcard")) {
       Picker("Payment Type", selection: $paymentType) {
-        ForEach(paymentTypes, id: \.self, content: Text.init)
+        ForEach(PaymentType.allCases, id: \.self) { type in
+          Text(type.displayName).tag(type)
+        }
       }
       .pickerStyle(SegmentedPickerStyle())
 
-      if paymentType == "Credit Card" || paymentType == "Debit Card" {
+      if paymentType == .creditCard || paymentType == .debitCard {
         TextField("Card number", text: $cardNumber)
           .padding()
           .background(Color(.systemGray6))

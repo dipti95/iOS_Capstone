@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategoryView: View {
-  @ObservedObject var viewModel: ProductsViewModel
+  @StateObject var viewModel: ProductsViewModel
   @State var categories: [String] = []
   @State var products: [Product] = []
 
@@ -32,7 +32,7 @@ struct CategoryView: View {
               .frame(width: 50, height: 50)
               .foregroundColor(.blue)
               .padding(.leading, 5)
-            Text(category.prefix(1).capitalized + category.dropFirst())
+            Text(category.capitalized)
               .fontWeight(.bold)
               .foregroundColor(Color("categoryTextColor"))
               .shadow(radius: 10)

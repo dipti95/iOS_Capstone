@@ -10,7 +10,7 @@ import SwiftUI
 struct OrdersViews: View {
   @EnvironmentObject var orders: OrderViewModel
   var body: some View {
-    NavigationView {
+    NavigationStack {
       if orders.order.isEmpty {
         VStack {
           Image("emptyCartImage")
