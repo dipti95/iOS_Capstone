@@ -13,46 +13,41 @@ struct NetworkStore {
 
   func fetchEntries() async throws -> [Product] {
     guard let url = productsAPI else {
-      print("endpoint")
-      throw AppError.general
+      throw AppError.urlError
     }
-
 
     let (data, response) = try await urlSession.data(from: url)
 
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      print("status")
-      throw AppError.general
+      throw AppError.statusCodeError
     }
 
     guard let decodedData = try? JSONDecoder().decode(ProductApi.self, from: data) else {
-      print("decode")
-      throw AppError.general
+      throw AppError.decodingError
     }
+
     if decodedData.products.isEmpty {
-      print("endpoint")
-      throw AppError.general
+      throw AppError.emptyDataError
     }
 
     return decodedData.products
   }
 
-
   func fetchCategories() async throws -> [String] {
     guard let url = URL(string: "https://dummyjson.com/products/categories") else {
       print("ProductCategoriesAPI")
-      throw AppError.general
+      throw AppError.urlError
     }
     let (data, response) = try await urlSession.data(from: url)
 
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      print("status")
-      throw AppError.general
+      print("status category")
+      throw AppError.statusCodeError
     }
 
     guard let decodedData = try? JSONDecoder().decode([String].self, from: data) else {
       print("decode")
-      throw AppError.general
+      throw AppError.decodingError
     }
     return decodedData
   }
