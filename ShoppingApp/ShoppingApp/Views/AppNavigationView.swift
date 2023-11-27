@@ -9,33 +9,33 @@ import SwiftUI
 
 struct AppNavigationView: View {
   let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink]
-    var body: some View {
-      TabView {
-        CategoryView(viewModel: ProductsViewModel())
-          .tabItem {
-            Label("Categories", systemImage: "list.bullet.circle")
-          }
+  var body: some View {
+    TabView {
+      CategoryView(viewModel: ProductsViewModel())
+        .tabItem {
+          Label("Categories", systemImage: "list.bullet.circle")
+        }
 
-        AllProductView(viewModel: ProductsViewModel())
-          .tabItem {
-            Label("All Products", systemImage: "list.bullet.circle")
-          }
+      AllProductView(viewModel: ProductsViewModel())
+        .tabItem {
+          Label("All Products", systemImage: "list.bullet.circle")
+        }
 
-        CartView()
-          .tabItem {
-            Label("Cart", systemImage: "cart.fill")
-          }
+      CartView()
+        .tabItem {
+          Label("Cart", systemImage: "cart.fill")
+        }
 
-        WishlistView()
-          .tabItem {
-            Label("WishList", systemImage: "heart.fill")
-          }
+      WishlistView()
+        .tabItem {
+          Label("WishList", systemImage: "heart.fill")
+        }
 
-        MyAccountView()
-          .tabItem {
-            Label("Account", systemImage: "person.crop.circle.fill")
-          }
-      }
+      MyAccountView()
+        .tabItem {
+          Label("Account", systemImage: "person.crop.circle.fill")
+        }
+    }
   }
 }
 

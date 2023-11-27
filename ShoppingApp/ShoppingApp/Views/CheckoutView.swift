@@ -7,22 +7,6 @@
 
 import SwiftUI
 
-enum PaymentType: String, CaseIterable {
-  case creditCard
-  case debitCard
-  case applePay
-  case payPal
-
-  var displayName: String {
-    switch self {
-    case .creditCard: return "Credit Card"
-    case .debitCard: return "Debit Card"
-    case .applePay: return "Apple Pay"
-    case .payPal: return "PayPal"
-    }
-  }
-}
-
 struct CheckoutView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var order: OrderViewModel
@@ -91,19 +75,13 @@ struct CheckoutView: View {
   var billingInformationSection: some View {
     GroupBox(label: Label("Billing Information", systemImage: "person.crop.circle")) {
       TextField("First Name", text: $firstName)
-
+        .padding()
       TextField("Last Name", text: $lastName)
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
       TextField("Address", text: $address)
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
       TextField("City", text: $city)
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
     }
   }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OrderViewDetails: View {
-  @State var order: Order
+  var order: Order
 
   var body: some View {
     List {

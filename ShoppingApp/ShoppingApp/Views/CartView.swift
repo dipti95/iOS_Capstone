@@ -13,18 +13,18 @@ struct CartView: View {
   @State var showItemAdded = false
 
   var body: some View {
-    NavigationStack {
+    NavigationView {
       if cart.productsInCart.isEmpty {
-        VStack {
-          Image("emptyCartImage")
-            .resizable()
-            .scaledToFit()
-
-          Text("Cart is empty")
-            .font(.system(size: 36, weight: .light, design: .rounded))
-            .multilineTextAlignment(.center)
-            .padding()
-        }
+        Image("emptyCartImage")
+          .resizable()
+          .scaledToFit()
+          .overlay {
+            Text("Cart is empty")
+              .font(.system(size: 36, weight: .light, design: .rounded))
+              .multilineTextAlignment(.center)
+              .fontWeight(.bold)
+              .foregroundColor(Color("categoryTextColor"))
+          }
       } else {
         VStack {
           let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
@@ -42,10 +42,8 @@ struct CartView: View {
                   }
                 )
                 VStack {
-                  Spacer()
                   Text("Title: \(product.title)")
                   Text("Price \(product.price, format: .currency(code: "USD"))")
-                  Spacer()
                 }
               }
             }

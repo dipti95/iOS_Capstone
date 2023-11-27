@@ -15,7 +15,7 @@ struct ContentView: View {
         if isActive {
           LaunchView()
         } else {
-            AppNavigationView()
+          AppNavigationView()
         }
       }
     }

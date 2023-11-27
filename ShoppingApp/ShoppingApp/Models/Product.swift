@@ -28,17 +28,17 @@ struct Product: Codable, Hashable, Identifiable {
   let thumbnail: URL?
   let images: [URL?]
 
-  enum CodingKeys: String, CodingKey {
-    case id
-    case title
-    case description
-    case price
-    case discountPercentage
-    case rating
-    case stock
-    case brand
-    case category
-    case thumbnail
-    case images
-  }
+//  enum CodingKeys: String, CodingKey {
+//    case id
+//    case title
+//    case description
+//    case price
+//    case discountPercentage
+//    case rating
+//    case stock
+//    case brand
+//    case category
+//    case thumbnail
+//    case images
+//  }
 }

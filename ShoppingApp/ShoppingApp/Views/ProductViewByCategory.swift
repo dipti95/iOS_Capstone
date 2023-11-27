@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductViewByCategory: View {
   @State var category: String
-  @Binding var products: [Product]
+  @State var products: [Product]
 
   var body: some View {
     NavigationStack {
