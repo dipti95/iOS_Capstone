@@ -8,15 +8,16 @@
 import Foundation
 
 struct NetworkStore {
-  var endpoint = URL(string: "https://dummyjson.com/products")
+  var productsAPI = URL(string: "https://dummyjson.com/products")
+  let urlSession = URLSession.shared
 
   func fetchEntries() async throws -> [Product] {
-    guard let url = endpoint else {
+    guard let url = productsAPI else {
       print("endpoint")
       throw AppError.general
     }
 
-    let urlSession = URLSession.shared
+
     let (data, response) = try await urlSession.data(from: url)
 
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
@@ -34,5 +35,25 @@ struct NetworkStore {
     }
 
     return decodedData.products
+  }
+
+
+  func fetchCategories() async throws -> [String] {
+    guard let url = URL(string: "https://dummyjson.com/products/categories") else {
+      print("ProductCategoriesAPI")
+      throw AppError.general
+    }
+    let (data, response) = try await urlSession.data(from: url)
+
+    guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+      print("status")
+      throw AppError.general
+    }
+
+    guard let decodedData = try? JSONDecoder().decode([String].self, from: data) else {
+      print("decode")
+      throw AppError.general
+    }
+    return decodedData
   }
 }

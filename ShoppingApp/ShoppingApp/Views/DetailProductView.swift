@@ -142,7 +142,7 @@ struct DetailProductView: View {
     }
 
     private func addToWishlist() {
-      if(!wishlist.productsInWishlist.contains(product)) {
+      if !wishlist.productsInWishlist.contains(product) {
         wishlist.productsInWishlist.append(product)
       }
       isInWishlist = true

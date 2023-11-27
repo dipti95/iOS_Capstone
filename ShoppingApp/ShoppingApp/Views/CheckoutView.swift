@@ -14,6 +14,8 @@ struct CheckoutView: View {
   @State private var cardNumber = ""
   @State private var email = ""
   @State private var password = ""
+  @Environment(\.dismiss)
+  var dismiss
   @AppStorage("firstName")
   var firstName = ""
 
@@ -29,19 +31,21 @@ struct CheckoutView: View {
   var totalPrice: Double {
     cart.productsInCart.reduce(0) { $0 + $1.price }
   }
+  @State private var showOrderPlacedView = false
 
   var body: some View {
-    NavigationStack {
-      ScrollView {
-        VStack(spacing: 20) {
-          paymentTypeSection
-          billingInformationSection
-          totalSection
-        }
-        .padding()
+    ScrollView {
+      Text("Checkout")
+        .bold()
+      VStack(spacing: 20) {
+        paymentTypeSection
+        billingInformationSection
+        totalSection
       }
-      .navigationTitle("Checkout")
-      .navigationBarTitleDisplayMode(.inline)
+      .padding()
+      .sheet(isPresented: $showOrderPlacedView) {
+        PlaceOrderAnimationView()
+      }
     }
   }
 
@@ -121,8 +125,15 @@ struct CheckoutView: View {
     let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
     order.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
     cart.productsInCart = []
+    showOrderPlacedView = true
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+      showOrderPlacedView = false
+      dismiss()
+    }
   }
 }
+
 
 #Preview {
   CheckoutView()

@@ -30,6 +30,14 @@ class ProductsViewModel: ObservableObject {
     }
     throw AppError.general
   }
+
+  func getCategoriesData() async throws -> [String] {
+    if let data = try? await networkStore.fetchCategories() {
+      print("Data loaded from network.")
+      return data
+    }
+    throw AppError.general
+  }
 }
 
 

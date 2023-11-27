@@ -11,9 +11,10 @@ struct CartView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var orders: OrderViewModel
   @State var showItemAdded = false
+  @State private var navigationPath = NavigationPath()
 
   var body: some View {
-    NavigationView {
+    NavigationStack(path: $navigationPath) {
       if cart.productsInCart.isEmpty {
         Image("emptyCartImage")
           .resizable()
@@ -23,7 +24,7 @@ struct CartView: View {
               .font(.system(size: 36, weight: .light, design: .rounded))
               .multilineTextAlignment(.center)
               .fontWeight(.bold)
-              .foregroundColor(Color("categoryTextColor"))
+              .foregroundColor(.white)
           }
       } else {
         VStack {

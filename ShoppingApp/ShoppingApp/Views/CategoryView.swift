@@ -49,18 +49,10 @@ struct CategoryView: View {
     }
     .task {
       await viewModel.getEntries()
-      extractCategories()
+      let dummy = try? await viewModel.getCategoriesData()
+      categories = dummy ?? []
     }
     .padding(.horizontal)
-  }
-  private func extractCategories() {
-    if case .success(let allProducts) = viewModel.state {
-      for product in allProducts {
-        if(!categories.contains(product.category)) {
-          categories.append(product.category)
-      }
-      }
-    }
   }
 }
 
