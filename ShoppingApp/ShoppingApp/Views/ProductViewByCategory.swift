@@ -56,36 +56,9 @@ struct ProductViewByCategory: View {
     .task {
       await viewModel.getEntries()
     }
-//    NavigationStack {
-//      List(products.filter { $0.category == category }, id: \.self) { product in
-//        NavigationLink(destination: DetailProductView(product: product)) {
-//          VStack(alignment: .leading, spacing: 10) {
-//            AsyncImage(url: product.thumbnail) { image in
-//              image
-//                .resizable()
-//                .scaledToFit()
-//            } placeholder: {
-//              Image("placeholder")
-//                .resizable()
-//                .scaledToFit()
-//            }
-//            .cornerRadius(10)
-//            .shadow(radius: 5)
-//            Text("$\(String(format: "%.2f", Double(product.price)))")
-//              .font(.headline)
-//              .foregroundColor(.primary)
-//            Text("Brand: \(product.brand)")
-//              .font(.subheadline)
-//              .foregroundColor(.secondary)
-//          }
-//          .padding(.vertical)
-//          .background(Color(.systemBackground))
-//          .cornerRadius(12)
-//          .shadow(radius: 3)
-//        }
-//      }
-//      .listStyle(PlainListStyle())
-//      .padding()
-//    }
   }
+}
+
+#Preview {
+  ProductViewByCategory(category: "smartphones", viewModel: ProductsViewModel())
 }
