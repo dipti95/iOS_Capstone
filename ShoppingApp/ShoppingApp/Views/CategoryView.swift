@@ -9,17 +9,16 @@ import SwiftUI
 
 struct CategoryView: View {
   @StateObject var viewModel: ProductsViewModel
-  @State var categories: [String] = []
 
   var body: some View {
     NavigationStack {
       switch viewModel.state {
       case .failed(let error):
         ErrorView(error: error)
-      case .success(let data):
-        List(categories, id: \.self) { category in
+      case .successString(let data):
+        List(data, id: \.self) { category in
           NavigationLink {
-            ProductViewByCategory(category: category, products: data)
+            ProductViewByCategory(category: category, viewModel: ProductsViewModel())
           } label: {
             HStack(spacing: 15) {
               Image("shoppingBags")
@@ -48,9 +47,7 @@ struct CategoryView: View {
       }
     }
     .task {
-      await viewModel.getEntries()
-      let dummy = try? await viewModel.getCategoriesData()
-      categories = dummy ?? []
+      await viewModel.getCategories()
     }
     .padding(.horizontal)
   }

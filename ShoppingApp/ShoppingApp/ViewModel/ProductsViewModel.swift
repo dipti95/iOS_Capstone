@@ -23,6 +23,17 @@ class ProductsViewModel: ObservableObject {
     }
   }
 
+  @MainActor
+  func getCategories() async {
+    do {
+      let categories = try await getCategoriesData()
+      state = .successString(data: categories)
+    } catch {
+      state = .failed(error: error)
+      print(error.localizedDescription)
+    }
+  }
+
   private func getData() async throws -> [Product] {
     do {
       let data = try await networkStore.fetchEntries()
@@ -33,8 +44,8 @@ class ProductsViewModel: ObservableObject {
     }
   }
 
-  @MainActor
-  func getCategoriesData() async throws -> [String] {
+
+  private func getCategoriesData() async throws -> [String] {
     if let data = try? await networkStore.fetchCategories() {
       print("Data loaded from network.")
       return data
@@ -50,9 +61,12 @@ extension ProductsViewModel {
 
     case success(data: [Product])
 
+    case successString(data: [String])
+
     case failed(error: Error)
   }
 }
+
 
 enum AppError: LocalizedError {
   case urlError
