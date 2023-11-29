@@ -16,6 +16,7 @@ struct OrdersViews: View {
           Image("emptyCartImage")
             .resizable()
             .scaledToFit()
+            .padding()
 
           Text("No order Placed")
             .font(.system(size: 36, weight: .light, design: .rounded))

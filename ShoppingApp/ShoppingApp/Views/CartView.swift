@@ -19,6 +19,7 @@ struct CartView: View {
         Image("emptyCartImage")
           .resizable()
           .scaledToFit()
+          .padding()
           .overlay {
             Text("Cart is empty")
               .font(.system(size: 36, weight: .light, design: .rounded))
