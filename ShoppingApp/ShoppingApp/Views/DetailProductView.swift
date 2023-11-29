@@ -34,7 +34,7 @@ struct DetailProductView: View {
 
         Text("Rating: \(String(format: "%.2f", Double(product.rating)))")
           .padding(.horizontal)
-        Text("Price: $\(String(format: "%.2f", Double(product.price)))")
+        Text("Price: \(product.price, format: .currency(code: "USD"))")
           .padding(.horizontal)
 
         actionButtons
@@ -142,7 +142,7 @@ struct DetailProductView: View {
     }
 
     private func addToWishlist() {
-      if(!wishlist.productsInWishlist.contains(product)) {
+      if !wishlist.productsInWishlist.contains(product) {
         wishlist.productsInWishlist.append(product)
       }
       isInWishlist = true

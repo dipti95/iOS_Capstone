@@ -33,7 +33,7 @@ class OrderViewModel: ObservableObject {
         .appendingPathExtension("json")
       try wishlistData.write(to: jsonWishlistDataURL)
     } catch {
-      print("Error encoding cart data to JSON file")
+      print("Error encoding data")
     }
   }
 

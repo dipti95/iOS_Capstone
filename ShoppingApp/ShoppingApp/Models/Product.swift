@@ -15,7 +15,7 @@ struct ProductApi: Codable {
   let limit: Int
 }
 
-struct Product: Codable, Hashable {
+struct Product: Codable, Hashable, Identifiable {
   let id: Int
   let title: String
   let description: String
@@ -27,18 +27,4 @@ struct Product: Codable, Hashable {
   let category: String
   let thumbnail: URL?
   let images: [URL?]
-
-  enum CodingKeys: String, CodingKey {
-    case id
-    case title
-    case description
-    case price
-    case discountPercentage
-    case rating
-    case stock
-    case brand
-    case category
-    case thumbnail
-    case images
-  }
 }

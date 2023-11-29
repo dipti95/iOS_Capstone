@@ -10,11 +10,12 @@ import SwiftUI
 struct CheckoutView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var order: OrderViewModel
-  private let paymentTypes = ["Credit Card", "Debit Card", "Apple Pay", "PayPal"]
-  @State private var paymentType = "Credit Card"
+  @State private var paymentType: PaymentType = .creditCard
   @State private var cardNumber = ""
   @State private var email = ""
   @State private var password = ""
+  @Environment(\.dismiss)
+  var dismiss
   @AppStorage("firstName")
   var firstName = ""
 
@@ -30,30 +31,34 @@ struct CheckoutView: View {
   var totalPrice: Double {
     cart.productsInCart.reduce(0) { $0 + $1.price }
   }
+  @State private var showOrderPlacedView = false
 
   var body: some View {
-    NavigationView {
-      ScrollView {
-        VStack(spacing: 20) {
-          paymentTypeSection
-          billingInformationSection
-          totalSection
-        }
-        .padding()
+    ScrollView {
+      Text("Checkout")
+        .bold()
+      VStack(spacing: 20) {
+        paymentTypeSection
+        billingInformationSection
+        totalSection
       }
-      .navigationTitle("Checkout")
-      .navigationBarTitleDisplayMode(.inline)
+      .padding()
+      .sheet(isPresented: $showOrderPlacedView) {
+        PlaceOrderAnimationView()
+      }
     }
   }
 
   var paymentTypeSection: some View {
     GroupBox(label: Label("Payment", systemImage: "creditcard")) {
       Picker("Payment Type", selection: $paymentType) {
-        ForEach(paymentTypes, id: \.self, content: Text.init)
+        ForEach(PaymentType.allCases, id: \.self) { type in
+          Text(type.displayName).tag(type)
+        }
       }
       .pickerStyle(SegmentedPickerStyle())
 
-      if paymentType == "Credit Card" || paymentType == "Debit Card" {
+      if paymentType == .creditCard || paymentType == .debitCard {
         TextField("Card number", text: $cardNumber)
           .padding()
           .background(Color(.systemGray6))
@@ -74,19 +79,13 @@ struct CheckoutView: View {
   var billingInformationSection: some View {
     GroupBox(label: Label("Billing Information", systemImage: "person.crop.circle")) {
       TextField("First Name", text: $firstName)
-
+        .padding()
       TextField("Last Name", text: $lastName)
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
       TextField("Address", text: $address)
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
       TextField("City", text: $city)
         .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
     }
   }
 
@@ -126,8 +125,15 @@ struct CheckoutView: View {
     let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
     order.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
     cart.productsInCart = []
+    showOrderPlacedView = true
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+      showOrderPlacedView = false
+      dismiss()
+    }
   }
 }
+
 
 #Preview {
   CheckoutView()

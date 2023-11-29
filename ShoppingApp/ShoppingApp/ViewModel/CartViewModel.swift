@@ -33,7 +33,7 @@ class CartViewModel: ObservableObject {
         .appendingPathExtension("json")
       try cartData.write(to: jsonCartDataURL)
     } catch {
-      print("Error encoding cart data to JSON file")
+      print("Error encoding data")
     }
   }
 
@@ -49,7 +49,7 @@ class CartViewModel: ObservableObject {
       productsInCart = decodedData
       return
     } catch {
-      print("Initial run of app or failure loading JSON file from Documents Directory")
+      print("Failure to load JSON file from Documents Directory")
     }
   }
 }

@@ -7,12 +7,12 @@
 
 import Foundation
 
-@MainActor
 class ProductsViewModel: ObservableObject {
   @Published var state: State = .initial
 
   let networkStore = NetworkStore()
 
+  @MainActor
   func getEntries() async {
     do {
       let product = try await getData()
@@ -23,12 +23,34 @@ class ProductsViewModel: ObservableObject {
     }
   }
 
+  @MainActor
+  func getCategories() async {
+    do {
+      let categories = try await getCategoriesData()
+      state = .successString(data: categories)
+    } catch {
+      state = .failed(error: error)
+      print(error.localizedDescription)
+    }
+  }
+
   private func getData() async throws -> [Product] {
-    if let data = try? await networkStore.fetchEntries() {
+    do {
+      let data = try await networkStore.fetchEntries()
+      print("Data loaded from network.")
+      return data
+    } catch {
+      throw error
+    }
+  }
+
+
+  private func getCategoriesData() async throws -> [String] {
+    if let data = try? await networkStore.fetchCategories() {
       print("Data loaded from network.")
       return data
     }
-    throw AppError.general
+    throw AppError.urlError
   }
 }
 
@@ -39,17 +61,29 @@ extension ProductsViewModel {
 
     case success(data: [Product])
 
+    case successString(data: [String])
+
     case failed(error: Error)
   }
 }
 
+
 enum AppError: LocalizedError {
-  case general
+  case urlError
+  case statusCodeError
+  case decodingError
+  case emptyDataError
 
   var errorDescription: String? {
     switch self {
-    case .general:
-      return "Uh-oh, something's gone wrong. Please check again later"
+    case .urlError:
+      return "Invalid URL endpoint."
+    case .statusCodeError:
+      return "Server returned an error."
+    case .decodingError:
+      return "Data decoding failed."
+    case .emptyDataError:
+      return "No data found."
     }
   }
 }

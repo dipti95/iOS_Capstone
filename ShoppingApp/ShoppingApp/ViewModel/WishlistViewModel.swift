@@ -33,7 +33,7 @@ class WishlistViewModel: ObservableObject {
         .appendingPathExtension("json")
       try wishlistData.write(to: jsonWishlistDataURL)
     } catch {
-      print("Error encoding cart data to JSON file")
+      print("Error encoding data")
     }
   }
 
@@ -49,7 +49,7 @@ class WishlistViewModel: ObservableObject {
       productsInWishlist = decodedData
       return
     } catch {
-      print("Failure to load JSON file from Documents Directory")
+      print("Failure to load JSON file(wishlist) from Documents Directory")
     }
   }
 }

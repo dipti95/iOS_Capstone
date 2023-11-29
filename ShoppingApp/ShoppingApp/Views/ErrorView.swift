@@ -25,5 +25,5 @@ struct ErrorView: View {
 }
 
 #Preview {
-  ErrorView(error: AppError.general)
+  ErrorView(error: AppError.statusCodeError)
 }

@@ -8,31 +8,47 @@
 import Foundation
 
 struct NetworkStore {
-  var endpoint = URL(string: "https://dummyjson.com/products")
+  var productsAPI = URL(string: "https://dummyjson.com/products")
+  let urlSession = URLSession.shared
 
   func fetchEntries() async throws -> [Product] {
-    guard let url = endpoint else {
-      print("endpoint")
-      throw AppError.general
+    guard let url = productsAPI else {
+      throw AppError.urlError
     }
 
-    let urlSession = URLSession.shared
     let (data, response) = try await urlSession.data(from: url)
 
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      print("status")
-      throw AppError.general
+      throw AppError.statusCodeError
     }
 
     guard let decodedData = try? JSONDecoder().decode(ProductApi.self, from: data) else {
-      print("decode")
-      throw AppError.general
+      throw AppError.decodingError
     }
+
     if decodedData.products.isEmpty {
-      print("endpoint")
-      throw AppError.general
+      throw AppError.emptyDataError
     }
 
     return decodedData.products
+  }
+
+  func fetchCategories() async throws -> [String] {
+    guard let url = URL(string: "https://dummyjson.com/products/categories") else {
+      print("ProductCategoriesAPI")
+      throw AppError.urlError
+    }
+    let (data, response) = try await urlSession.data(from: url)
+
+    guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+      print("status category")
+      throw AppError.statusCodeError
+    }
+
+    guard let decodedData = try? JSONDecoder().decode([String].self, from: data) else {
+      print("decode")
+      throw AppError.decodingError
+    }
+    return decodedData
   }
 }

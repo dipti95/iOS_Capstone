@@ -11,20 +11,22 @@ struct CartView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var orders: OrderViewModel
   @State var showItemAdded = false
+  @State private var navigationPath = NavigationPath()
 
   var body: some View {
-    NavigationView {
+    NavigationStack(path: $navigationPath) {
       if cart.productsInCart.isEmpty {
-        VStack {
-          Image("emptyCartImage")
-            .resizable()
-            .scaledToFit()
-
-          Text("Cart is empty")
-            .font(.system(size: 36, weight: .light, design: .rounded))
-            .multilineTextAlignment(.center)
-            .padding()
-        }
+        Image("emptyCartImage")
+          .resizable()
+          .scaledToFit()
+          .padding()
+          .overlay {
+            Text("Cart is empty")
+              .font(.system(size: 36, weight: .light, design: .rounded))
+              .multilineTextAlignment(.center)
+              .fontWeight(.bold)
+              .foregroundColor(.white)
+          }
       } else {
         VStack {
           let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
@@ -42,10 +44,8 @@ struct CartView: View {
                   }
                 )
                 VStack {
-                  Spacer()
                   Text("Title: \(product.title)")
-                  Text("Price: $\(String(format: "%.2f", product.price))")
-                  Spacer()
+                  Text("Price \(product.price, format: .currency(code: "USD"))")
                 }
               }
             }
