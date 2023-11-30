@@ -11,12 +11,12 @@ struct AppNavigationView: View {
   let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink]
   var body: some View {
     TabView {
-      CategoryView(viewModel: ProductsViewModel())
+      CategoryView(viewModel: ProductsViewModel(networkStore: NetworkStore()))
         .tabItem {
           Label("Categories", systemImage: "list.bullet.circle")
         }
 
-      AllProductView(viewModel: ProductsViewModel())
+      AllProductView(viewModel: ProductsViewModel(networkStore: NetworkStore()))
         .tabItem {
           Label("All Products", systemImage: "list.bullet.circle")
         }

@@ -68,19 +68,13 @@ struct CartView: View {
                 .shadow(radius: 3)
             }
             .disabled(cart.productsInCart.isEmpty)
+            .accessibilityIdentifier("CheckoutNavigationLink")
           }
 
           .navigationTitle("Cart")
         }
       }
     }
-  }
-
-  private func checkout() {
-    let totalPrice = cart.productsInCart.reduce(0) { $0 + $1.price }
-    orders.order.append(Order(orderItems: cart.productsInCart, totalPrice: totalPrice))
-    cart.productsInCart = []
-    showItemAdded.toggle()
   }
 }
 

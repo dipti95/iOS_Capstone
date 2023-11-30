@@ -38,6 +38,7 @@ struct AllProductView: View {
             .background(Color(.systemBackground))
             .cornerRadius(12)
             .shadow(radius: 3)
+            .accessibilityIdentifier("DetailProductView")
           }
         }
         .listStyle(PlainListStyle())
@@ -59,5 +60,5 @@ struct AllProductView: View {
 }
 
 #Preview {
-  AllProductView(viewModel: ProductsViewModel())
+  AllProductView(viewModel: ProductsViewModel(networkStore: NetworkStore()))
 }

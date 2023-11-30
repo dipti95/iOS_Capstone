@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct NetworkStore {
+protocol NetworkStoring {
+  func fetchEntries() async throws -> [Product]
+  func fetchCategories() async throws -> [String]
+}
+
+struct NetworkStore: NetworkStoring {
   var productsAPI = URL(string: "https://dummyjson.com/products")
   let urlSession = URLSession.shared
 
@@ -50,5 +55,26 @@ struct NetworkStore {
       throw AppError.decodingError
     }
     return decodedData
+  }
+}
+
+
+class MockNetworkStore: NetworkStoring {
+  var mockProducts: [Product]?
+  var mockCategories: [String]?
+  var error: Error?
+
+  func fetchEntries() async throws -> [Product] {
+    if let error = error {
+      throw error
+    }
+    return mockProducts ?? []
+  }
+
+  func fetchCategories() async throws -> [String] {
+    if let error = error {
+      throw error
+    }
+    return mockCategories ?? []
   }
 }
