@@ -27,7 +27,7 @@
 * The project uses MVVM architecture: The Model includes at least one ObservableObject with at least one Published value that at least one view subscribes to. Networking code is in a Service struct or class that can be instantiated by an ObservableObject: Completed
 * The project utilizes SwiftLint with Kodeco’s configuration file: Completed
 * The app builds without Warnings or Errors: Builds without error
-* The project has a test plan including both UI and unit tests, with a minimum of 50% code coverage, and all tests succeed. Make sure your test plan is in your repo: Covered 50%
+* The project has a test plan including both UI and unit tests, with a minimum of 50% code coverage, and all tests succeed. Make sure your test plan is in your repo: Code coverage above 60%
 * A custom app icon: Completed
 * An onboarding screen: Completed
 * A custom display name: Completed
