@@ -9,72 +9,94 @@ import XCTest
 @testable import ShoppingApp
 
 final class ShoppingAppTests: XCTestCase {
+  // swiftlint:disable:next implicitly_unwrapped_optional
+  var viewModel: ProductsViewModel!
+  // swiftlint:disable:next implicitly_unwrapped_optional
+  var mockNetworkStore: MockNetworkStore!
+  let cartViewModel = CartViewModel()
+  let wishListViewModel = WishlistViewModel()
+
   override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    super.setUp()
+    mockNetworkStore = MockNetworkStore()
+    viewModel = ProductsViewModel(networkStore: mockNetworkStore)
   }
 
-    override func tearDownWithError() throws {
-      // Put teardown code here. This method is called after the invocation of each test method in the class.
+  override func tearDownWithError() throws {}
+  let product = Product(
+    id: 1,
+    title: "iPhone 9",
+    description: "An apple mobile which is nothing like apple",
+    price: 549,
+    discountPercentage: 12.96,
+    rating: 4.69,
+    stock: 94,
+    brand: "Apple",
+    category: "smartphones",
+    thumbnail: URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg"),
+    images: [
+      URL(string: "https://i.dummyjson.com/data/products/1/1.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/2.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/3.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/4.jpg"),
+      URL(string: "https://i.dummyjson.com/data/products/1/thumbnail.jpg")
+    ]
+  )
+
+  func testFetchProductsRealNetworkCall() async {
+    mockNetworkStore.mockProducts = [product]
+
+    await viewModel.getEntries()
+    if case .success(let data) = viewModel.state {
+      XCTAssertEqual(data, mockNetworkStore.mockProducts)
+    } else {
+      XCTFail("Expected success state with products")
     }
-
-func test_decode_items() {
-  let url = URL(string: "https://dummyjson.com/products")
-
-  let expectation = XCTestExpectation(description: "Server responds in a reasonable time")
-
-  if let url = url {
-    URLSession.shared.dataTask(with: url) { data, response, error in
-      defer { expectation.fulfill() }
-
-      // Check for any network errors
-      XCTAssertNil(error, "Error: \(error?.localizedDescription ?? "")")
-
-      do {
-        let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
-        XCTAssertEqual(httpResponse.statusCode, 200, "HTTP status code is not 200")
-
-        guard let jsonData = data else {
-          XCTFail("No data received from the server")
-          return
-        }
-
-        let decodedData: Any
-        do {
-          decodedData = try JSONDecoder().decode([Product].self, from: jsonData)
-        } catch {
-          decodedData = try JSONSerialization.jsonObject(with: jsonData, options: [])
-        }
-
-        if let productArray = decodedData as? [Product] {
-          XCTAssertFalse(productArray.isEmpty, "Product array should not be empty")
-        } else if let productDictionary = decodedData as? [String: Any] {
-        } else {
-          XCTFail("Unexpected JSON structure")
-        }
-    } catch {
-      XCTFail("Test encountered an error: \(error)")
-      }
-    }
-    .resume()
-  } else {
-    XCTFail("Invalid URL")
   }
-  wait(for: [expectation], timeout: 5.0)
-}
-
-
-  func testExample() throws {
-  // This is an example of a functional test case.
-  // Use XCTAssert and related functions to verify your tests produce the correct results.
-  // Any test you write for XCTest can be annotated as throws and async.
-  // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-  // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+  func testFetchCategoriesRealNetworkCall() async {
+    mockNetworkStore.mockCategories = ["smartphones"]
+    await viewModel.getCategories()
+    if case .successString(let data) = viewModel.state {
+      XCTAssertEqual(data, mockNetworkStore.mockCategories)
+    } else {
+      XCTFail("Expected success state with products")
+    }
   }
 
-  func testPerformanceExample() throws {
-    // This is an example of a performance test case.
-    self.measure {
-    // Put the code you want to measure the time of here.
-    }
+  func testAddRemoveProduct() {
+    let productToAdd = product
+    cartViewModel.productsInCart.append(productToAdd)
+    XCTAssertTrue(cartViewModel.productsInCart.contains(productToAdd), "Product should be added to cart")
+
+    cartViewModel.productsInCart.removeAll { $0 == productToAdd }
+
+    XCTAssertFalse(cartViewModel.productsInCart.contains(productToAdd), "Product should be removed from cart")
+    XCTAssertEqual(cartViewModel.productsInCart.count, 0)
+
+    let totalPrice = cartViewModel.productsInCart.reduce(0) { $0 + $1.price }
+    XCTAssertEqual(totalPrice, 0)
+  }
+
+  func testPersistence() {
+    let productToAdd = product
+    cartViewModel.productsInCart.append(productToAdd)
+    cartViewModel.saveItemsInCartToDocumentDirectory()
+
+    let newViewModel = CartViewModel()
+
+    XCTAssertTrue(newViewModel.productsInCart.contains(productToAdd), "Product is persisted and loaded")
+  }
+
+  func testAddRemoveWishlistProduct() {
+    let productToAdd = product
+    wishListViewModel.productsInWishlist.append(productToAdd)
+
+    XCTAssertTrue(wishListViewModel.productsInWishlist.contains(productToAdd), "Product should be added to wishlist")
+
+    wishListViewModel.productsInWishlist.removeAll { $0 == productToAdd }
+    XCTAssertFalse(
+      wishListViewModel.productsInWishlist.contains(productToAdd),
+      "Product should be removed from wishlist"
+    )
   }
 }

@@ -18,7 +18,7 @@ struct CategoryView: View {
       case .successString(let data):
         List(data, id: \.self) { category in
           NavigationLink {
-            ProductViewByCategory(category: category, viewModel: ProductsViewModel())
+            ProductViewByCategory(category: category, viewModel: ProductsViewModel(networkStore: NetworkStore()))
           } label: {
             HStack(spacing: 15) {
               Image("shoppingBags")
@@ -55,5 +55,5 @@ struct CategoryView: View {
 
 
 #Preview {
-  CategoryView(viewModel: ProductsViewModel())
+  CategoryView(viewModel: ProductsViewModel(networkStore: NetworkStore()))
 }

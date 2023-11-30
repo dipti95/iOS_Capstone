@@ -10,7 +10,11 @@ import Foundation
 class ProductsViewModel: ObservableObject {
   @Published var state: State = .initial
 
-  let networkStore = NetworkStore()
+  private var networkStore: NetworkStoring
+
+  init(networkStore: NetworkStoring) {
+    self.networkStore = networkStore
+  }
 
   @MainActor
   func getEntries() async {

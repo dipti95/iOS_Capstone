@@ -22,20 +22,23 @@ struct DetailProductView: View {
           .font(.title2)
           .bold()
           .padding(.horizontal)
-
+          .accessibility(identifier: "TitleLabelIdentifier")
         imageSection
 
         Text("Description:")
           .font(.headline)
           .padding(.horizontal)
 
+
         Text(product.description)
           .padding(.horizontal)
+          .accessibility(identifier: "DescriptionLabelIdentifier")
 
         Text("Rating: \(String(format: "%.2f", Double(product.rating)))")
           .padding(.horizontal)
         Text("Price: \(product.price, format: .currency(code: "USD"))")
           .padding(.horizontal)
+          .accessibility(identifier: "PriceLabelIdentifier")
 
         actionButtons
       }

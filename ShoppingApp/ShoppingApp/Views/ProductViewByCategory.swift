@@ -60,5 +60,5 @@ struct ProductViewByCategory: View {
 }
 
 #Preview {
-  ProductViewByCategory(category: "smartphones", viewModel: ProductsViewModel())
+  ProductViewByCategory(category: "smartphones", viewModel: ProductsViewModel(networkStore: NetworkStore()))
 }
