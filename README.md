@@ -47,7 +47,7 @@
 * The project uses MVVM architecture: The Model includes at least one ObservableObject with at least one Published value that at least one view subscribes to. Networking code is in a Service struct or class that can be instantiated by an ObservableObject:
   - App used MVVM architecture
 * The project utilizes SwiftLint with Kodeco’s configuration file:
-  - SwiftLint with Kodeco’s configuration file. Followed https://github.com/kodecocodes/swift-style-guide/blob/main/SWIFTLINT.markdown instructions
+  - SwiftLint with Kodeco’s configuration file. Followed https://github.com/kodecocodes/swift-style-guide/blob/main/SWIFTLINT.markdown instructions. There are three Switlint comments: safe to force unwrapped,as the value are present.
 * The app builds without Warnings or Errors:
   - Builds without error
 * The project has a test plan including both UI and unit tests, with a minimum of 50% code coverage, and all tests succeed. Make sure your test plan is in your repo:
