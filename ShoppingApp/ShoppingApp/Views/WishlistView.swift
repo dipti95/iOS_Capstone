@@ -16,11 +16,11 @@ struct WishlistView: View {
         Image("shoppingBags")
           .resizable()
           .scaledToFit()
+          .padding()
 
         Text("Product is not Selected in WishList")
           .font(.system(size: 36, weight: .light, design: .rounded))
           .multilineTextAlignment(.center)
-          .padding()
       } else {
         Text("Wish List")
           .font(.largeTitle)

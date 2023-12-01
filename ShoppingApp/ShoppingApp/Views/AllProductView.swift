@@ -29,7 +29,6 @@ struct AllProductView: View {
               Text("\(product.price, format: .currency(code: "USD"))")
                 .font(.headline)
                 .foregroundColor(.primary)
-
               Text("Brand: \(product.brand)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
@@ -38,12 +37,10 @@ struct AllProductView: View {
             .background(Color(.systemBackground))
             .cornerRadius(12)
             .shadow(radius: 3)
-            .accessibilityIdentifier("DetailProductView")
           }
         }
         .listStyle(PlainListStyle())
         .padding()
-
         .navigationTitle("Products")
 
       case .failed(let error):

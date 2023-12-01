@@ -38,6 +38,7 @@
 		37D5CBF22B13E45D00749A71 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5CBF12B13E45D00749A71 /* Constant.swift */; };
 		37DA4B3C2B11451E00F4DF76 /* OrdersViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DA4B3B2B11451E00F4DF76 /* OrdersViews.swift */; };
 		37DA4B3E2B114E0F00F4DF76 /* OrderViewDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DA4B3D2B114E0F00F4DF76 /* OrderViewDetails.swift */; };
+		37FAC2132B192F9200FDE4BA /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FAC2122B192F9200FDE4BA /* OnboardingStepView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		37D5CBF12B13E45D00749A71 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		37DA4B3B2B11451E00F4DF76 /* OrdersViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViews.swift; sourceTree = "<group>"; };
 		37DA4B3D2B114E0F00F4DF76 /* OrderViewDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewDetails.swift; sourceTree = "<group>"; };
+		37FAC2122B192F9200FDE4BA /* OnboardingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				37D5CBEF2B13CF5600749A71 /* AppNavigationView.swift */,
 				3728189A2B153EBF00BE45AC /* PlaceOrderAnimationView.swift */,
 				3728189C2B1584A700BE45AC /* OnboardingView.swift */,
+				37FAC2122B192F9200FDE4BA /* OnboardingStepView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				371CC2052AFEE884004FE52C /* ContentView.swift in Sources */,
 				377185F72B0E59D300680073 /* CategoryView.swift in Sources */,
 				37DA4B3C2B11451E00F4DF76 /* OrdersViews.swift in Sources */,
+				37FAC2132B192F9200FDE4BA /* OnboardingStepView.swift in Sources */,
 				370696D62B03A7E900B1D172 /* WishlistView.swift in Sources */,
 				377185FB2B0EE9CD00680073 /* CheckoutView.swift in Sources */,
 				375F7A492B0150A000070710 /* DetailProductView.swift in Sources */,

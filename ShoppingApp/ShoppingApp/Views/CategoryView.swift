@@ -21,7 +21,7 @@ struct CategoryView: View {
             ProductViewByCategory(category: category, viewModel: ProductsViewModel(networkStore: NetworkStore()))
           } label: {
             HStack(spacing: 15) {
-              Image("shoppingBags")
+              Image("categoryImage")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 50, height: 50)

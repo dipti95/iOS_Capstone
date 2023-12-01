@@ -13,7 +13,7 @@ struct AppNavigationView: View {
     TabView {
       CategoryView(viewModel: ProductsViewModel(networkStore: NetworkStore()))
         .tabItem {
-          Label("Categories", systemImage: "list.bullet.circle")
+          Label("Categories", systemImage: "house")
         }
 
       AllProductView(viewModel: ProductsViewModel(networkStore: NetworkStore()))
