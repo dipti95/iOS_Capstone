@@ -3,6 +3,8 @@
 * VelvetVibe is a iOS application built with SwiftUI, aiming to provide users with a smooth and visually captivating shopping journey.
 * Fetches products data from https://dummyjson.com/products
 
+  ![VelvetVibe Demo](Images/VelvetVibe.gif)
+
 # Required Capstone App Functionality
 
 * Xcode 17.0
@@ -50,6 +52,7 @@
   - Builds without error
 * The project has a test plan including both UI and unit tests, with a minimum of 50% code coverage, and all tests succeed. Make sure your test plan is in your repo:
   - Code coverage above 60%
+  - <img src="Images/CodeCoverage.png" width="230">
 * A custom app icon:
   - App has custom icon
 * An onboarding screen:
