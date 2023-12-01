@@ -10,7 +10,7 @@ import SwiftUI
 struct CheckoutView: View {
   @EnvironmentObject var cart: CartViewModel
   @EnvironmentObject var order: OrderViewModel
-  @State private var paymentType: PaymentType = .creditCard
+  @State private var paymentType: Constants.PaymentType = .creditCard
   @State private var cardNumber = ""
   @State private var email = ""
   @State private var password = ""
@@ -52,7 +52,7 @@ struct CheckoutView: View {
   var paymentTypeSection: some View {
     GroupBox(label: Label("Payment", systemImage: "creditcard")) {
       Picker("Payment Type", selection: $paymentType) {
-        ForEach(PaymentType.allCases, id: \.self) { type in
+        ForEach(Constants.PaymentType.allCases, id: \.self) { type in
           Text(type.displayName).tag(type)
         }
       }

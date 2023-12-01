@@ -28,18 +28,14 @@ struct DetailProductView: View {
         Text("Description:")
           .font(.headline)
           .padding(.horizontal)
-
-
         Text(product.description)
           .padding(.horizontal)
           .accessibility(identifier: "DescriptionLabelIdentifier")
-
         Text("Rating: \(String(format: "%.2f", Double(product.rating)))")
           .padding(.horizontal)
         Text("Price: \(product.price, format: .currency(code: "USD"))")
           .padding(.horizontal)
           .accessibility(identifier: "PriceLabelIdentifier")
-
         actionButtons
       }
       .padding(.bottom)
@@ -90,9 +86,7 @@ struct DetailProductView: View {
           .foregroundColor(currentImageIndex == 0 ? .gray : .blue)
       }
       .disabled(currentImageIndex == 0)
-
       Spacer()
-
       Button(action: nextImage) {
         Image(systemName: "arrow.forward.circle.fill")
           .font(.largeTitle)
@@ -128,33 +122,33 @@ struct DetailProductView: View {
     .padding(.horizontal)
   }
 
-    private func nextImage() {
-      if currentImageIndex < product.images.count - 1 {
-        withAnimation {
-        currentImageIndex += 1
-        }
+  private func nextImage() {
+    if currentImageIndex < product.images.count - 1 {
+      withAnimation {
+      currentImageIndex += 1
       }
     }
+  }
 
-    private func previousImage() {
-      if currentImageIndex > 0 {
-        withAnimation {
-          currentImageIndex -= 1
-        }
+  private func previousImage() {
+    if currentImageIndex > 0 {
+      withAnimation {
+        currentImageIndex -= 1
       }
     }
+  }
 
-    private func addToWishlist() {
-      if !wishlist.productsInWishlist.contains(product) {
-        wishlist.productsInWishlist.append(product)
-      }
-      isInWishlist = true
+  private func addToWishlist() {
+    if !wishlist.productsInWishlist.contains(product) {
+      wishlist.productsInWishlist.append(product)
     }
+    isInWishlist = true
+  }
 
-    private func addToCart() {
-      cart.productsInCart.append(product)
-      showItemAdded.toggle()
-    }
+  private func addToCart() {
+    cart.productsInCart.append(product)
+    showItemAdded.toggle()
+  }
 }
 
 #Preview {
